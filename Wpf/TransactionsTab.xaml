@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="Wpf.TransactionsTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:wpf="clr-namespace:Wpf"
+             xmlns:presentation="clr-namespace:Presentation;assembly=Presentation" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="Resources.xaml"
+                    >
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel
+        LastChildFill="True"
+        >
+        <GroupBox
+            DockPanel.Dock="Bottom"
+            Header="Rules"
+            Height="100"
+            >
+        </GroupBox>
+        <DockPanel 
+            DockPanel.Dock="Top"
+            LastChildFill="True">
+            <GroupBox 
+                DockPanel.Dock="Right" 
+                Width="300" 
+                Header="Categorize">
+                <wpf:CategorySelector 
+                    x:Name="m_category_selector"
+                    CategorySelected="m_category_selector_CategorySelected"
+                    >
+                </wpf:CategorySelector>
+            </GroupBox>
+            <GroupBox Header="Transactions">
+                <ListBox
+                DockPanel.Dock="Left"
+                ItemsSource="{Binding Path=Expenses}" 
+                SelectedItem="{Binding Path=CurrentExpense}"
+                HorizontalContentAlignment="Stretch"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListBox.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}">SteelBlue</SolidColorBrush>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}">SteelBlue</SolidColorBrush>
+                    </ListBox.Resources>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="Auto" Width="Auto" Margin="0,20">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition ></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Rectangle Height="20" Width="20" Grid.Column="0" Fill="{Binding Path=Color}" />
+                                <TextBlock Style="{StaticResource ResourceKey=SmallText}"  Grid.Row="0" Grid.Column="1" Text="{Binding Path=Description}" Margin="5,3" TextWrapping="Wrap"></TextBlock>
+                                <TextBlock Style="{StaticResource ResourceKey=SmallText}"  Grid.Row="1" Grid.Column="2" Text="{Binding Path=Destinations}" Margin="5,3" TextWrapping="Wrap"></TextBlock>
+                                <TextBlock Style="{StaticResource ResourceKey=SmallText}"  Grid.Row="0" Grid.Column="2" Text="{Binding Path=Amount,StringFormat=EUR {0:N2}}" Margin="5,3" FontSize="10" TextWrapping="Wrap"></TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
+        </DockPanel>
+    </DockPanel>
+
+</UserControl>

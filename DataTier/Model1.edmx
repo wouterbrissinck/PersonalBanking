@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BankTestModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="BankTestModelStoreContainer">
+          <EntitySet Name="Categories" EntityType="BankTestModel.Store.Categories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="sysdiagrams" EntityType="BankTestModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Transact" EntityType="BankTestModel.Store.Transact" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TransactionsSelectorView" EntityType="BankTestModel.Store.TransactionsSelectorView" store:Type="Views" store:Schema="dbo" store:Name="TransactionsSelectorView">
+            <DefiningQuery>SELECT 
+      [TransactionsSelectorView].[Reference] AS [Reference], 
+      [TransactionsSelectorView].[Amount] AS [Amount], 
+      [TransactionsSelectorView].[Destinations] AS [Destinations], 
+      [TransactionsSelectorView].[Description] AS [Description], 
+      [TransactionsSelectorView].[Date] AS [Date], 
+      [TransactionsSelectorView].[Account] AS [Account], 
+      [TransactionsSelectorView].[Name] AS [Name], 
+      [TransactionsSelectorView].[Category] AS [Category], 
+      [TransactionsSelectorView].[Color] AS [Color]
+      FROM [dbo].[TransactionsSelectorView] AS [TransactionsSelectorView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewCategoriesEditor" EntityType="BankTestModel.Store.ViewCategoriesEditor" store:Type="Views" store:Schema="dbo" store:Name="ViewCategoriesEditor">
+            <DefiningQuery>SELECT 
+      [ViewCategoriesEditor].[Name] AS [Name], 
+      [ViewCategoriesEditor].[Color] AS [Color]
+      FROM [dbo].[ViewCategoriesEditor] AS [ViewCategoriesEditor]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Transact_Categories" Association="BankTestModel.Store.FK_Transact_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Transact" EntitySet="Transact" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nchar" MaxLength="20" />
+          <Property Name="Color" Type="char" MaxLength="9" />
+          <Property Name="Description" Type="ntext" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Transact">
+          <Key>
+            <PropertyRef Name="Reference" />
+            <PropertyRef Name="Account" />
+          </Key>
+          <Property Name="Reference" Type="nchar" Nullable="false" MaxLength="10" />
+          <Property Name="Account" Type="nchar" Nullable="false" MaxLength="22" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Destinations" Type="text" />
+          <Property Name="Description" Type="text" />
+          <Property Name="Category" Type="int" />
+          <Property Name="Date" Type="date" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'BankTest.dbo.TransactionsSelectorView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="TransactionsSelectorView">
+          <Key>
+            <PropertyRef Name="Reference" />
+            <PropertyRef Name="Account" />
+          </Key>
+          <Property Name="Reference" Type="nchar" Nullable="false" MaxLength="10" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Destinations" Type="text" />
+          <Property Name="Description" Type="text" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Account" Type="nchar" Nullable="false" MaxLength="22" />
+          <Property Name="Name" Type="nchar" MaxLength="20" />
+          <Property Name="Category" Type="int" />
+          <Property Name="Color" Type="char" MaxLength="9" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'BankTest.dbo.ViewCategoriesEditor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="ViewCategoriesEditor">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="nchar" Nullable="false" MaxLength="256" />
+          <Property Name="Color" Type="char" MaxLength="3" />
+        </EntityType>
+        <Association Name="FK_Transact_Categories">
+          <End Role="Categories" Type="BankTestModel.Store.Categories" Multiplicity="0..1" />
+          <End Role="Transact" Type="BankTestModel.Store.Transact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transact">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BankTestModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="BankTestEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="BankTestModel.Categories" />
+          <EntitySet Name="sysdiagrams" EntityType="BankTestModel.sysdiagrams" />
+          <EntitySet Name="Transact" EntityType="BankTestModel.Transact" />
+          <EntitySet Name="TransactionsSelectorView" EntityType="BankTestModel.TransactionsSelectorView" />
+          <EntitySet Name="ViewCategoriesEditor" EntityType="BankTestModel.ViewCategoriesEditor" />
+          <AssociationSet Name="FK_Transact_Categories" Association="BankTestModel.FK_Transact_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Transact" EntitySet="Transact" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" Unicode="true" FixedLength="true" />
+          <Property Name="Color" Type="String" MaxLength="9" Unicode="false" FixedLength="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Transact" Relationship="BankTestModel.FK_Transact_Categories" FromRole="Categories" ToRole="Transact" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Transact">
+          <Key>
+            <PropertyRef Name="Reference" />
+            <PropertyRef Name="Account" />
+          </Key>
+          <Property Name="Reference" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="Account" Type="String" Nullable="false" MaxLength="22" Unicode="true" FixedLength="true" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Destinations" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Category" Type="Int32" />
+          <Property Name="Date" Type="DateTime" />
+          <NavigationProperty Name="Categories" Relationship="BankTestModel.FK_Transact_Categories" FromRole="Transact" ToRole="Categories" />
+        </EntityType>
+        <EntityType Name="TransactionsSelectorView">
+          <Key>
+            <PropertyRef Name="Reference" />
+            <PropertyRef Name="Account" />
+          </Key>
+          <Property Name="Reference" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Destinations" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Date" Type="DateTime" />
+          <Property Name="Account" Type="String" Nullable="false" MaxLength="22" Unicode="true" FixedLength="true" />
+          <Property Name="Name" Type="String" MaxLength="20" Unicode="true" FixedLength="true" />
+          <Property Name="Category" Type="Int32" />
+          <Property Name="Color" Type="String" MaxLength="9" Unicode="false" FixedLength="true" />
+        </EntityType>
+        <EntityType Name="ViewCategoriesEditor">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="true" />
+          <Property Name="Color" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+        </EntityType>
+        <Association Name="FK_Transact_Categories">
+          <End Role="Categories" Type="BankTestModel.Categories" Multiplicity="0..1" />
+          <End Role="Transact" Type="BankTestModel.Transact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transact">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BankTestModelStoreContainer" CdmEntityContainer="BankTestEntities1">
+          <EntitySetMapping Name="Categories"><EntityTypeMapping TypeName="BankTestModel.Categories"><MappingFragment StoreEntitySet="Categories">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Color" ColumnName="Color" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams"><EntityTypeMapping TypeName="BankTestModel.sysdiagrams"><MappingFragment StoreEntitySet="sysdiagrams">
+            <ScalarProperty Name="name" ColumnName="name" />
+            <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+            <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+            <ScalarProperty Name="version" ColumnName="version" />
+            <ScalarProperty Name="definition" ColumnName="definition" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Transact"><EntityTypeMapping TypeName="BankTestModel.Transact"><MappingFragment StoreEntitySet="Transact">
+            <ScalarProperty Name="Reference" ColumnName="Reference" />
+            <ScalarProperty Name="Account" ColumnName="Account" />
+            <ScalarProperty Name="Amount" ColumnName="Amount" />
+            <ScalarProperty Name="Destinations" ColumnName="Destinations" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+            <ScalarProperty Name="Category" ColumnName="Category" />
+            <ScalarProperty Name="Date" ColumnName="Date" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="TransactionsSelectorView"><EntityTypeMapping TypeName="BankTestModel.TransactionsSelectorView"><MappingFragment StoreEntitySet="TransactionsSelectorView">
+            <ScalarProperty Name="Reference" ColumnName="Reference" />
+            <ScalarProperty Name="Amount" ColumnName="Amount" />
+            <ScalarProperty Name="Destinations" ColumnName="Destinations" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+            <ScalarProperty Name="Date" ColumnName="Date" />
+            <ScalarProperty Name="Account" ColumnName="Account" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Category" ColumnName="Category" />
+            <ScalarProperty Name="Color" ColumnName="Color" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="ViewCategoriesEditor"><EntityTypeMapping TypeName="BankTestModel.ViewCategoriesEditor"><MappingFragment StoreEntitySet="ViewCategoriesEditor">
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Color" ColumnName="Color" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model1">
+        <EntityTypeShape EntityType="BankTestModel.Categories" Width="1.5" PointX="0.75" PointY="1.25" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="BankTestModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="4.75" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="BankTestModel.Transact" Width="1.5" PointX="3" PointY="1" Height="2.5571907552083317" IsExpanded="true" />
+        <EntityTypeShape EntityType="BankTestModel.TransactionsSelectorView" Width="1.5" PointX="2.75" PointY="4.75" Height="2.7494921874999996" IsExpanded="true" />
+        <EntityTypeShape EntityType="BankTestModel.ViewCategoriesEditor" Width="1.5" PointX="4.75" PointY="4.75" Height="1.4033821614583317" IsExpanded="true" />
+        <AssociationConnector Association="BankTestModel.FK_Transact_Categories" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.2401432291666667" />
+          <ConnectorPoint PointX="3" PointY="2.2401432291666667" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
