@@ -1,0 +1,11 @@
+*.pdb
+*.cache
+*.exe
+*.tlog
+*.baml
+*.dll
+*.user
+*.lref
+*.suo
+bin/
+obj/

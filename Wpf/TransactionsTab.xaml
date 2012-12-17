@@ -62,7 +62,7 @@
                                     <RowDefinition Height="Auto"></RowDefinition>
                                     <RowDefinition Height="Auto"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <Rectangle Height="20" Width="20" Grid.Column="0" Fill="{Binding Path=Color}" />
+                                <Rectangle Height="20" Width="20" Grid.Column="0" Fill="{Binding Path=Categories.Color}" />
                                 <TextBlock Style="{StaticResource ResourceKey=SmallText}"  Grid.Row="0" Grid.Column="1" Text="{Binding Path=Description}" Margin="5,3" TextWrapping="Wrap"></TextBlock>
                                 <TextBlock Style="{StaticResource ResourceKey=SmallText}"  Grid.Row="1" Grid.Column="2" Text="{Binding Path=Destinations}" Margin="5,3" TextWrapping="Wrap"></TextBlock>
                                 <TextBlock Style="{StaticResource ResourceKey=SmallText}"  Grid.Row="0" Grid.Column="2" Text="{Binding Path=Amount,StringFormat=EUR {0:N2}}" Margin="5,3" FontSize="10" TextWrapping="Wrap"></TextBlock>

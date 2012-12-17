@@ -18,13 +18,13 @@ namespace Presentation
         #endregion
 
         #region bindable properties
-        public IQueryable<TransactionsSelectorView> Expenses
+        public IQueryable<Transact> Expenses
         {
             get { return Database.Current.Expenses; }
         }
 
-        TransactionsSelectorView m_current_expense;
-        public TransactionsSelectorView CurrentExpense
+        Transact m_current_expense;
+        public Transact CurrentExpense
         {
             get { return m_current_expense; }
             set 
@@ -48,7 +48,7 @@ namespace Presentation
 
         public void SelectCategory(Categories i_selected)
         {
-            Database.Current.GetTransaction(CurrentExpense.Account, CurrentExpense.Reference).Category = i_selected.ID;
+            CurrentExpense.Category = i_selected.ID;
             Database.Current.Context.SaveChanges();
             NotifyPropertyChanged("Expenses");
         }

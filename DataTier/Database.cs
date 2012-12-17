@@ -60,21 +60,26 @@ namespace DataTier
         }
         #endregion
 
+        #region Queries
+
+
+        public ObjectQuery<Transact> Expenses
+        {
+            get
+            {
+                var result = from trans in Context.Transact
+                             where trans.Amount < 0
+                             select trans;
+                return (ObjectQuery<Transact>)result;
+            }
+
+        }
+        #endregion
+
         #region views
         public ObjectQuery<Categories> CategoriesView
         {
             get {return (ObjectQuery<Categories>) from cat in Context.Categories select cat; }
-        }
-
-        public ObjectQuery<TransactionsSelectorView> Expenses
-        {
-            get 
-            {
-                return (ObjectQuery<TransactionsSelectorView>)from trans in Context.TransactionsSelectorView
-                                                where trans.Amount<0
-                                                select trans; 
-            }
-
         }
 
         #endregion
