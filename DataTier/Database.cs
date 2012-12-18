@@ -61,8 +61,6 @@ namespace DataTier
         #endregion
 
         #region Queries
-
-
         public ObjectQuery<Transact> Expenses
         {
             get
@@ -83,7 +81,5 @@ namespace DataTier
         }
 
         #endregion
-
-
     }
 }

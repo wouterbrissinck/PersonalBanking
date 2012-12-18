@@ -7,7 +7,7 @@ using DataTier;
 
 namespace Presentation
 {
-    public class TransactionsPresenter
+    public class TransactionsPresenter:INotifyPropertyChanged
     {
         #region Lifetime
         public TransactionsPresenter()
@@ -50,6 +50,7 @@ namespace Presentation
         {
             CurrentExpense.Category = i_selected.ID;
             Database.Current.Context.SaveChanges();
+
             NotifyPropertyChanged("Expenses");
         }
     }

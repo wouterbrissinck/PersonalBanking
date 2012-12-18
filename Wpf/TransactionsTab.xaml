@@ -41,6 +41,7 @@
             </GroupBox>
             <GroupBox Header="Transactions">
                 <ListBox
+                Name="m_expenses_selector"
                 DockPanel.Dock="Left"
                 ItemsSource="{Binding Path=Expenses}" 
                 SelectedItem="{Binding Path=CurrentExpense}"

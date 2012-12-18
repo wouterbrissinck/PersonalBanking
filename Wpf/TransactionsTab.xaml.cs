@@ -32,6 +32,7 @@ namespace Wpf
         private void m_category_selector_CategorySelected(DataTier.Categories i_selected)
         {
             Presenter.SelectCategory(i_selected);
+            m_expenses_selector.SelectedIndex++;
         }
     }
 }
