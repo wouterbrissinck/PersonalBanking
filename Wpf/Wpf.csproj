@@ -67,8 +67,14 @@
       <DependentUpon>CategorySelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Events.cs" />
+    <Compile Include="ExpensesSelector.xaml.cs">
+      <DependentUpon>ExpensesSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ImportTab.xaml.cs">
       <DependentUpon>ImportTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RulesTab.xaml.cs">
+      <DependentUpon>RulesTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="TransactionsTab.xaml.cs">
       <DependentUpon>TransactionsTab.xaml</DependentUpon>
@@ -78,6 +84,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CategorySelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ExpensesSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -98,6 +108,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Resources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RulesTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

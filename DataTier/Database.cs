@@ -34,13 +34,21 @@ namespace DataTier
             {
                 throw new Exception("Cannot connect to database");
             }
+
+            Rules = new DBRules();
         }
 
         public BankTestEntities1 Context { get; set; }
         #endregion
 
+        public DBRules Rules
+        {
+            get;
+            private set;
+        }
+
         #region Direct access
-        
+
         public ObjectSet<Categories> Categories
         {
             get { return Context.Categories; }
@@ -72,6 +80,7 @@ namespace DataTier
             }
 
         }
+
         #endregion
 
         #region views

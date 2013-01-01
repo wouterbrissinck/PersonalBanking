@@ -1,20 +1,23 @@
 ﻿<Window x:Class="Wpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:presentation="clr-namespace:Wpf"
+        xmlns:thisLib="clr-namespace:Wpf"
         Title="MainWindow" Height="800" Width="1000" Margin="10">
     <Window.Resources>
     </Window.Resources>
     <Grid>
         <TabControl Name="m_MainTabs" >
             <TabItem Header="Import" Name="m_TabImport">
-                <presentation:ImportTab></presentation:ImportTab>
+                <thisLib:ImportTab></thisLib:ImportTab>
             </TabItem>
             <TabItem Header="Transactions" Name="m_TabTransactions">
-                <presentation:TransactionsTab></presentation:TransactionsTab>
+                <thisLib:TransactionsTab></thisLib:TransactionsTab>
             </TabItem>
             <TabItem Header="Categories" Name="m_TabCategorize">
-                <presentation:CategoriesTab></presentation:CategoriesTab>
+                <thisLib:CategoriesTab></thisLib:CategoriesTab>
+            </TabItem>
+            <TabItem Header="Rules" Name="m_TabRules">
+                <thisLib:RulesTab></thisLib:RulesTab>
             </TabItem>
         </TabControl>
     </Grid>

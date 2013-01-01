@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,6 +46,7 @@
     <Compile Include="CategoryPresenter.cs" />
     <Compile Include="Converters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RulesPresenter.cs" />
     <Compile Include="TransactionsPresenter.cs" />
   </ItemGroup>
   <ItemGroup>

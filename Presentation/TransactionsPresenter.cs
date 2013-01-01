@@ -3,16 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using System.Windows.Input;
 using DataTier;
+
 
 namespace Presentation
 {
     public class TransactionsPresenter:INotifyPropertyChanged
     {
+        #region commands
+        public class SelectCategoryCommand : ICommand 
+        {
+            public SelectCategoryCommand(TransactionsPresenter i_presenter)
+            {
+                Presenter = i_presenter;
+            }
+            TransactionsPresenter Presenter { get; set; }
+
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public event EventHandler CanExecuteChanged;
+
+            public void Execute(object parameter)
+            {
+                Presenter.CurrentExpense.Category = (parameter as DataTier.Categories).ID;
+                Database.Current.Context.SaveChanges();
+                Presenter.NotifyPropertyChanged("Expenses");
+            }
+        }
+        #endregion
+
         #region Lifetime
         public TransactionsPresenter()
         {
             CurrentExpense = Expenses.First();
+            SelectCategory = new SelectCategoryCommand(this);
 
         }
         #endregion
@@ -45,13 +73,8 @@ namespace Presentation
         }
         #endregion
 
-
-        public void SelectCategory(Categories i_selected)
-        {
-            CurrentExpense.Category = i_selected.ID;
-            Database.Current.Context.SaveChanges();
-
-            NotifyPropertyChanged("Expenses");
-        }
+        #region Commands
+        public ICommand SelectCategory { get; set; }
+        #endregion
     }
 }

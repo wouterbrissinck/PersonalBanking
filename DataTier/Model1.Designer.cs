@@ -19,6 +19,7 @@ using System.Runtime.Serialization;
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("BankTestModel", "FK_Transact_Categories", "Categories", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DataTier.Categories), "Transact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DataTier.Transact), true)]
+[assembly: EdmRelationshipAttribute("BankTestModel", "FK_Rules_Rules", "Categories", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DataTier.Categories), "Rules", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DataTier.Rules), true)]
 
 #endregion
 
@@ -121,34 +122,18 @@ namespace DataTier
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<TransactionsSelectorView> TransactionsSelectorView
+        public ObjectSet<Rules> Rules
         {
             get
             {
-                if ((_TransactionsSelectorView == null))
+                if ((_Rules == null))
                 {
-                    _TransactionsSelectorView = base.CreateObjectSet<TransactionsSelectorView>("TransactionsSelectorView");
+                    _Rules = base.CreateObjectSet<Rules>("Rules");
                 }
-                return _TransactionsSelectorView;
+                return _Rules;
             }
         }
-        private ObjectSet<TransactionsSelectorView> _TransactionsSelectorView;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<ViewCategoriesEditor> ViewCategoriesEditor
-        {
-            get
-            {
-                if ((_ViewCategoriesEditor == null))
-                {
-                    _ViewCategoriesEditor = base.CreateObjectSet<ViewCategoriesEditor>("ViewCategoriesEditor");
-                }
-                return _ViewCategoriesEditor;
-            }
-        }
-        private ObjectSet<ViewCategoriesEditor> _ViewCategoriesEditor;
+        private ObjectSet<Rules> _Rules;
 
         #endregion
         #region AddTo Methods
@@ -178,19 +163,11 @@ namespace DataTier
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the TransactionsSelectorView EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Rules EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToTransactionsSelectorView(TransactionsSelectorView transactionsSelectorView)
+        public void AddToRules(Rules rules)
         {
-            base.AddObject("TransactionsSelectorView", transactionsSelectorView);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the ViewCategoriesEditor EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToViewCategoriesEditor(ViewCategoriesEditor viewCategoriesEditor)
-        {
-            base.AddObject("ViewCategoriesEditor", viewCategoriesEditor);
+            base.AddObject("Rules", rules);
         }
 
         #endregion
@@ -346,6 +323,224 @@ namespace DataTier
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Transact>("BankTestModel.FK_Transact_Categories", "Transact", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("BankTestModel", "FK_Rules_Rules", "Rules")]
+        public EntityCollection<Rules> Rules
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Rules>("BankTestModel.FK_Rules_Rules", "Rules");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Rules>("BankTestModel.FK_Rules_Rules", "Rules", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="BankTestModel", Name="Rules")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Rules : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Rules object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="field">Initial value of the field property.</param>
+        /// <param name="category">Initial value of the category property.</param>
+        public static Rules CreateRules(global::System.Guid id, global::System.Int32 field, global::System.Int32 category)
+        {
+            Rules rules = new Rules();
+            rules.ID = id;
+            rules.field = field;
+            rules.category = category;
+            return rules;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Guid _ID;
+        partial void OnIDChanging(global::System.Guid value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 field
+        {
+            get
+            {
+                return _field;
+            }
+            set
+            {
+                OnfieldChanging(value);
+                ReportPropertyChanging("field");
+                _field = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("field");
+                OnfieldChanged();
+            }
+        }
+        private global::System.Int32 _field;
+        partial void OnfieldChanging(global::System.Int32 value);
+        partial void OnfieldChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String substring
+        {
+            get
+            {
+                return _substring;
+            }
+            set
+            {
+                OnsubstringChanging(value);
+                ReportPropertyChanging("substring");
+                _substring = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("substring");
+                OnsubstringChanged();
+            }
+        }
+        private global::System.String _substring;
+        partial void OnsubstringChanging(global::System.String value);
+        partial void OnsubstringChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 category
+        {
+            get
+            {
+                return _category;
+            }
+            set
+            {
+                OncategoryChanging(value);
+                ReportPropertyChanging("category");
+                _category = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("category");
+                OncategoryChanged();
+            }
+        }
+        private global::System.Int32 _category;
+        partial void OncategoryChanging(global::System.Int32 value);
+        partial void OncategoryChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("BankTestModel", "FK_Rules_Rules", "Categories")]
+        public Categories Categories
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Categories>("BankTestModel.FK_Rules_Rules", "Categories").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Categories>("BankTestModel.FK_Rules_Rules", "Categories").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Categories> CategoriesReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Categories>("BankTestModel.FK_Rules_Rules", "Categories");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Categories>("BankTestModel.FK_Rules_Rules", "Categories", value);
                 }
             }
         }
@@ -753,339 +948,6 @@ namespace DataTier
         }
 
         #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="BankTestModel", Name="TransactionsSelectorView")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class TransactionsSelectorView : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new TransactionsSelectorView object.
-        /// </summary>
-        /// <param name="reference">Initial value of the Reference property.</param>
-        /// <param name="amount">Initial value of the Amount property.</param>
-        /// <param name="account">Initial value of the Account property.</param>
-        public static TransactionsSelectorView CreateTransactionsSelectorView(global::System.String reference, global::System.Decimal amount, global::System.String account)
-        {
-            TransactionsSelectorView transactionsSelectorView = new TransactionsSelectorView();
-            transactionsSelectorView.Reference = reference;
-            transactionsSelectorView.Amount = amount;
-            transactionsSelectorView.Account = account;
-            return transactionsSelectorView;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Reference
-        {
-            get
-            {
-                return _Reference;
-            }
-            set
-            {
-                if (_Reference != value)
-                {
-                    OnReferenceChanging(value);
-                    ReportPropertyChanging("Reference");
-                    _Reference = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("Reference");
-                    OnReferenceChanged();
-                }
-            }
-        }
-        private global::System.String _Reference;
-        partial void OnReferenceChanging(global::System.String value);
-        partial void OnReferenceChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal Amount
-        {
-            get
-            {
-                return _Amount;
-            }
-            set
-            {
-                OnAmountChanging(value);
-                ReportPropertyChanging("Amount");
-                _Amount = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Amount");
-                OnAmountChanged();
-            }
-        }
-        private global::System.Decimal _Amount;
-        partial void OnAmountChanging(global::System.Decimal value);
-        partial void OnAmountChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Destinations
-        {
-            get
-            {
-                return _Destinations;
-            }
-            set
-            {
-                OnDestinationsChanging(value);
-                ReportPropertyChanging("Destinations");
-                _Destinations = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Destinations");
-                OnDestinationsChanged();
-            }
-        }
-        private global::System.String _Destinations;
-        partial void OnDestinationsChanging(global::System.String value);
-        partial void OnDestinationsChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Description
-        {
-            get
-            {
-                return _Description;
-            }
-            set
-            {
-                OnDescriptionChanging(value);
-                ReportPropertyChanging("Description");
-                _Description = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Description");
-                OnDescriptionChanged();
-            }
-        }
-        private global::System.String _Description;
-        partial void OnDescriptionChanging(global::System.String value);
-        partial void OnDescriptionChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> Date
-        {
-            get
-            {
-                return _Date;
-            }
-            set
-            {
-                OnDateChanging(value);
-                ReportPropertyChanging("Date");
-                _Date = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Date");
-                OnDateChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _Date;
-        partial void OnDateChanging(Nullable<global::System.DateTime> value);
-        partial void OnDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Account
-        {
-            get
-            {
-                return _Account;
-            }
-            set
-            {
-                if (_Account != value)
-                {
-                    OnAccountChanging(value);
-                    ReportPropertyChanging("Account");
-                    _Account = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("Account");
-                    OnAccountChanged();
-                }
-            }
-        }
-        private global::System.String _Account;
-        partial void OnAccountChanging(global::System.String value);
-        partial void OnAccountChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Name
-        {
-            get
-            {
-                return _Name;
-            }
-            set
-            {
-                OnNameChanging(value);
-                ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Name");
-                OnNameChanged();
-            }
-        }
-        private global::System.String _Name;
-        partial void OnNameChanging(global::System.String value);
-        partial void OnNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> Category
-        {
-            get
-            {
-                return _Category;
-            }
-            set
-            {
-                OnCategoryChanging(value);
-                ReportPropertyChanging("Category");
-                _Category = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Category");
-                OnCategoryChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _Category;
-        partial void OnCategoryChanging(Nullable<global::System.Int32> value);
-        partial void OnCategoryChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Color
-        {
-            get
-            {
-                return _Color;
-            }
-            set
-            {
-                OnColorChanging(value);
-                ReportPropertyChanging("Color");
-                _Color = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Color");
-                OnColorChanged();
-            }
-        }
-        private global::System.String _Color;
-        partial void OnColorChanging(global::System.String value);
-        partial void OnColorChanged();
-
-        #endregion
-    
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="BankTestModel", Name="ViewCategoriesEditor")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class ViewCategoriesEditor : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new ViewCategoriesEditor object.
-        /// </summary>
-        /// <param name="name">Initial value of the Name property.</param>
-        public static ViewCategoriesEditor CreateViewCategoriesEditor(global::System.String name)
-        {
-            ViewCategoriesEditor viewCategoriesEditor = new ViewCategoriesEditor();
-            viewCategoriesEditor.Name = name;
-            return viewCategoriesEditor;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Name
-        {
-            get
-            {
-                return _Name;
-            }
-            set
-            {
-                if (_Name != value)
-                {
-                    OnNameChanging(value);
-                    ReportPropertyChanging("Name");
-                    _Name = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("Name");
-                    OnNameChanged();
-                }
-            }
-        }
-        private global::System.String _Name;
-        partial void OnNameChanging(global::System.String value);
-        partial void OnNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Color
-        {
-            get
-            {
-                return _Color;
-            }
-            set
-            {
-                OnColorChanging(value);
-                ReportPropertyChanging("Color");
-                _Color = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Color");
-                OnColorChanged();
-            }
-        }
-        private global::System.String _Color;
-        partial void OnColorChanging(global::System.String value);
-        partial void OnColorChanged();
-
-        #endregion
-    
     }
 
     #endregion
