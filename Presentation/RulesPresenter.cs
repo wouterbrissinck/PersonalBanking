@@ -66,6 +66,11 @@ namespace Presentation
             }
         }
 
+        public class Category
+        {
+            public string Name{get;set;}
+            public int Id{get;set;}
+        }
         public class Rule
         {
             public Rule(DataTier.Rules i_data)
@@ -109,6 +114,20 @@ namespace Presentation
             {
                 get { return Data.substring; }
                 set { Data.substring = value; }
+            }
+
+            public IEnumerable<Category> AllCategories
+            {
+                get 
+                {
+                    return from cat in DataTier.Database.Current.Context.Categories
+                                select new Category
+                                {
+                                    Name = cat.Name,
+                                    Id = cat.ID
+                                };
+
+                }
             }
 
 

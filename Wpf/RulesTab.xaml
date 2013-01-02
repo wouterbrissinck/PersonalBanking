@@ -25,7 +25,15 @@
                         <TextBlock VerticalAlignment="Center" Text=" contains "></TextBlock>
                         <TextBox Text="{Binding Path=Substring}"></TextBox>
                         <TextBlock VerticalAlignment="Center" Text=" then assign category "></TextBlock>
-                        <ComboBox ItemsSource="{Binding Path=AllCategories}" ></ComboBox>
+                        <ComboBox ItemsSource="{Binding Path=AllCategories}" >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
