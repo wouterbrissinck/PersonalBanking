@@ -7,12 +7,47 @@
              xmlns:presentation="clr-namespace:Presentation;assembly=Presentation" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <DockPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <GridSplitter
+            Grid.Column="0"
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Height="5"
+            HorizontalAlignment="Stretch" 
+            ShowsPreview="True">
+            
+        </GridSplitter>
+        <StackPanel
+            Grid.Column="0"
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Orientation="Vertical"
+             >
+            <Button Margin="10" Click="AddButtonClick">Add</Button>
+            <Button Margin="10" Click="DeleteButtonClick">Delete</Button>
+            <Button Margin="10" Click="ApplyButtonClick">Apply</Button>
+        </StackPanel>
         <ListView
+            Grid.Column="0"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
             Name="m_rule_list"
-            DockPanel.Dock="Left"
             ItemsSource="{Binding Path=Rules}"
+            SelectedItem="{Binding Path=CurrentRule}"
             >
+            <ListView.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}">SteelBlue</SolidColorBrush>
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}">SteelBlue</SolidColorBrush>
+            </ListView.Resources>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel
@@ -25,7 +60,7 @@
                         <TextBlock VerticalAlignment="Center" Text=" contains "></TextBlock>
                         <TextBox Text="{Binding Path=Substring}"></TextBox>
                         <TextBlock VerticalAlignment="Center" Text=" then assign category "></TextBlock>
-                        <ComboBox ItemsSource="{Binding Path=AllCategories}" >
+                        <ComboBox ItemsSource="{Binding Path=AllCategories}" SelectedIndex="{Binding Path=CategoryIndex}" >
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -40,10 +75,10 @@
 
         </ListView>
         <wpf:ExpensesSelector
-            DockPanel.Dock="Right"
-            >
+            Grid.Column="1"
+            Grid.Row="0"
+             >
 
         </wpf:ExpensesSelector>
-
-    </DockPanel>
+    </Grid>
 </UserControl>

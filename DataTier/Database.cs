@@ -36,6 +36,7 @@ namespace DataTier
             }
 
             Rules = new DBRules();
+
         }
 
         public BankTestEntities1 Context { get; set; }

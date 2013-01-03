@@ -17,35 +17,57 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel
-        LastChildFill="True"
+    <Grid
         >
+        
+        <Grid.RowDefinitions>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition ></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="5"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <GridSplitter
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch" ShowsPreview="True">
+            
+        </GridSplitter>
+        <GridSplitter
+            Grid.Column="1"
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch" ShowsPreview="True">
+
+        </GridSplitter>
         <GroupBox
-            DockPanel.Dock="Bottom"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
             Header="Rules"
-            Height="100"
             >
         </GroupBox>
-        <DockPanel 
-            DockPanel.Dock="Top"
-            LastChildFill="True">
-            <GroupBox 
-                DockPanel.Dock="Right" 
-                Width="300" 
+        <GroupBox 
+                Grid.Row="0"
+                Grid.Column="2"
                 Header="Categorize">
-                <wpf:CategorySelector 
+            <wpf:CategorySelector 
                     x:Name="m_category_selector"
                     CategorySelected="m_category_selector_CategorySelected"
                     >
-                </wpf:CategorySelector>
-            </GroupBox>
-            <GroupBox Header="Transactions">
-                <wpf:ExpensesSelector
+            </wpf:CategorySelector>
+        </GroupBox>
+        <GroupBox 
+            Grid.Row="0"
+            Grid.Column="0"
+            Header="Transactions">
+            <wpf:ExpensesSelector
                     x:Name="m_expenses_selector">
-                </wpf:ExpensesSelector>
+            </wpf:ExpensesSelector>
 
-            </GroupBox>
-        </DockPanel>
-    </DockPanel>
+        </GroupBox>
+    </Grid>
 
 </UserControl>
