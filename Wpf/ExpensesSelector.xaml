@@ -20,7 +20,8 @@
                 ItemsSource="{Binding Path=Expenses}" 
                 SelectedItem="{Binding Path=CurrentExpense}"
                 HorizontalContentAlignment="Stretch"
-                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollBarVisibility="Auto">
         <ListBox.Resources>
             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}">SteelBlue</SolidColorBrush>
             <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}">SteelBlue</SolidColorBrush>

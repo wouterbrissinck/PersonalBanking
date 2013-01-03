@@ -43,7 +43,7 @@ namespace Wpf
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            Database.Current.Context.SaveChanges();
+            Database.Current.SaveChanges();
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

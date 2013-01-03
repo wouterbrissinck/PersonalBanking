@@ -33,7 +33,7 @@ namespace DataTier
         {
             var victim= Database.Current.Context.Rules.FirstOrDefault(rule => rule.ID==i_id);
             Database.Current.Context.Rules.DeleteObject(victim);
-            Database.Current.Context.SaveChanges();
+            Database.Current.SaveChanges();
         }
         public Rules AddRule()
         {
@@ -43,25 +43,64 @@ namespace DataTier
             rule.Name = "New Rule";
             rule.FieldExt = EField.description;
             rule.substring = "xxx";
-            rule.category = Database.Current.Categories.FirstOrDefault().ID;
+            rule.category = Database.Current.Categories.Default().ID;
             Database.Current.Context.Rules.AddObject(rule);
-            Database.Current.Context.SaveChanges();
+            Database.Current.SaveChanges();
 
             return rule;
         }
 
-        public IEnumerable<Transact> GetTransactions(Guid i_rule)
-        { 
+        Rules GetRule(Guid i_rule)
+        {
             var rules=from a_rule in Rules
                         where a_rule.ID==i_rule
                         select a_rule;
-            var rule=rules.First();
+            return rules.First();
+        }
 
-            var result=from transact in Database.Current.Transactions
-                       where transact.Description.Contains(rule.substring)
-                select transact;
+        public IEnumerable<Transact> GetTransactions(Guid i_rule)
+        { 
+            var rule=GetRule(i_rule);
+
+            IEnumerable<Transact> result=null;
+
+            switch (rule.FieldExt)
+            { 
+                case EField.account:
+                    {
+                        result = from transact in Database.Current.Transactions
+                                 where transact.Account==rule.substring
+                                 select transact;
+                        break;
+                    }
+                case EField.description:
+                    {
+                        result = from transact in Database.Current.Transactions
+                                 where transact.Description.Contains(rule.substring)
+                                 select transact;
+                        break;
+                    }
+                case EField.destination:
+                    {
+                        result = from transact in Database.Current.Transactions
+                                 where transact.Destinations.Contains(rule.substring)
+                                 select transact;
+                        break;
+                    }
+
+            }
 
             return result;
+        }
+
+        public void Apply(Guid i_rule)
+        {
+            Rules rule = GetRule(i_rule);
+            foreach (var transaction in GetTransactions(i_rule))
+            {
+                transaction.Category = rule.category;                
+            }
+            Database.Current.SaveChanges();
         }
     }
 }

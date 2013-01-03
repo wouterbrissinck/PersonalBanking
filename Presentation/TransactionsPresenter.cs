@@ -30,7 +30,7 @@ namespace Presentation
             public void Execute(object parameter)
             {
                 Presenter.CurrentExpense.Category = (parameter as DataTier.Categories).ID;
-                Database.Current.Context.SaveChanges();
+                Database.Current.SaveChanges();
                 Presenter.NotifyPropertyChanged("Expenses");
             }
         }
@@ -41,14 +41,20 @@ namespace Presentation
         {
             CurrentExpense = Expenses.First();
             SelectCategory = new SelectCategoryCommand(this);
+            Database.Current.DataChanged += new DataChangedEvent(Current_DataChanged);
 
+        }
+
+        void Current_DataChanged()
+        {
+            NotifyPropertyChanged("Expenses");
         }
         #endregion
 
         #region bindable properties
         public IQueryable<Transact> Expenses
         {
-            get { return Database.Current.Expenses; }
+            get { return Database.Current.UncatExpenses; }
         }
 
         Transact m_current_expense;

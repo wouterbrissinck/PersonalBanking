@@ -120,7 +120,11 @@ namespace Presentation
             public string Substring
             {
                 get { return Data.substring; }
-                set { Data.substring = value; }
+                set 
+                { 
+                    Data.substring = value;
+                    Dad.NotifyPropertyChanged("Expenses");
+                }
             }
 
             public IEnumerable<Category> AllCategories
@@ -161,6 +165,13 @@ namespace Presentation
             CreateRules();
             CreateAllCategories();
             CurrentExpense = Expenses.First();
+            Database.Current.DataChanged += new DataChangedEvent(Current_DataChanged);
+        }
+
+        void Current_DataChanged()
+        {
+            NotifyPropertyChanged("Expenses");
+            NotifyPropertyChanged("Rules");
         }
         #endregion
 
@@ -206,7 +217,8 @@ namespace Presentation
         }
         public void Apply()
         {
-
+            Database.Current.Rules.Apply(CurrentRule.ID);
+            NotifyPropertyChanged("Expenses");
         }
 
         #endregion

@@ -58,7 +58,7 @@
                         <TextBlock VerticalAlignment="Center" Text="  If "/>
                         <ComboBox ItemsSource="{Binding Path=PossibleFields}" SelectedItem="{Binding Path=FieldStr}"></ComboBox>
                         <TextBlock VerticalAlignment="Center" Text=" contains "></TextBlock>
-                        <TextBox Text="{Binding Path=Substring}"></TextBox>
+                        <TextBox Text="{Binding Path=Substring,UpdateSourceTrigger=PropertyChanged}"></TextBox>
                         <TextBlock VerticalAlignment="Center" Text=" then assign category "></TextBlock>
                         <ComboBox ItemsSource="{Binding Path=AllCategories}" SelectedIndex="{Binding Path=CategoryIndex}" >
                             <ComboBox.ItemTemplate>

@@ -48,5 +48,10 @@
             <Button Margin="10,5" Click="OnClickAdd">Add</Button>
             <Button Margin="10,5" Click="OnClickDelete">Delete</Button>
         </StackPanel>
+        <wpf:ExpensesSelector 
+            x:Name="m_expenses"
+            Height="auto"
+            ScrollViewer.VerticalScrollBarVisibility="Visible">            
+        </wpf:ExpensesSelector>
     </StackPanel>
 </UserControl>

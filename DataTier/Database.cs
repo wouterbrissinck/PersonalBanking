@@ -9,6 +9,7 @@ using System.Data.Objects.DataClasses;
 
 namespace DataTier
 {
+    public delegate void DataChangedEvent();
     public class Database
     {
         #region lifetime
@@ -36,6 +37,7 @@ namespace DataTier
             }
 
             Rules = new DBRules();
+            Categories = new DBCategories();
 
         }
 
@@ -47,13 +49,13 @@ namespace DataTier
             get;
             private set;
         }
+        public DBCategories Categories
+        {
+            get;
+            private set;
+        }
 
         #region Direct access
-
-        public ObjectSet<Categories> Categories
-        {
-            get { return Context.Categories; }
-        }
 
         public ObjectSet<Transact> Transactions
         {
@@ -69,6 +71,21 @@ namespace DataTier
         }
         #endregion
 
+        #region Events
+        public event DataChangedEvent DataChanged;
+        #endregion
+
+
+        #region Operations
+        public void SaveChanges()
+        {
+            Context.SaveChanges();
+            if (DataChanged != null)
+                DataChanged();
+
+        }
+        #endregion
+
         #region Queries
         public ObjectQuery<Transact> Expenses
         {
@@ -76,6 +93,18 @@ namespace DataTier
             {
                 var result = from trans in Context.Transact
                              where trans.Amount < 0
+                             select trans;
+                return (ObjectQuery<Transact>)result;
+            }
+
+        }
+        public ObjectQuery<Transact> UncatExpenses
+        {
+            get
+            {
+                var result = from trans in Context.Transact
+                             where trans.Amount < 0
+                             && !trans.Category.HasValue
                              select trans;
                 return (ObjectQuery<Transact>)result;
             }

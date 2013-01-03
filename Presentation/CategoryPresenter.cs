@@ -35,19 +35,38 @@ namespace Presentation
             { 
                 m_current_category = value;
                 NotifyPropertyChanged("CurrentCategory");
+                NotifyPropertyChanged("Expenses");
             }
         }
 
+        public IEnumerable<Transact> Expenses
+        {
+            get 
+            {
+                if (CurrentCategory != null)
+                {
+                    return from expense in Database.Current.Expenses
+                           where expense.Category == CurrentCategory.ID
+                           select expense;
+                }
+                else
+                {
+                    return from expense in Database.Current.Expenses
+                           select expense;
+                }
+            }
+        }
+        public Transact CurrentExpense
+        {
+            get;
+            set;
+        }
         #endregion
         
         #region Operations
         public void AddCategory()
         {
-            Categories newCategory=new Categories();
-            newCategory.Name = "New Category";
-            newCategory.Color = "#FF000000";
-            Database.Current.Categories.AddObject(newCategory);
-            Database.Current.Context.SaveChanges();
+            Database.Current.Categories.Add();
 
             CurrentCategory = Categories.First();
             NotifyPropertyChanged("Categories");
@@ -56,8 +75,7 @@ namespace Presentation
 
         public void DeleteCategory()
         {
-            Database.Current.Categories.DeleteObject(CurrentCategory);
-            Database.Current.Context.SaveChanges();
+            Database.Current.Categories.Delete(CurrentCategory);
             CurrentCategory = Categories.First();
             NotifyPropertyChanged("Categories");
             NotifyPropertyChanged("CurrentCategory");
