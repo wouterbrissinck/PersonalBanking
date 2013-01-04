@@ -72,7 +72,7 @@ namespace Presentation
             public string Name { get; set; }
             public int Id { get; set; }
         }
-        public class Rule
+        public class Rule : INotifyPropertyChanged
         {
             public Rule(RulesPresenter i_dad,DataTier.Rules i_data)
             {
@@ -156,6 +156,16 @@ namespace Presentation
             private RulesPresenter Dad{ get; set;}
             #endregion
 
+
+            #region INotifyProperyChanged
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            public void NotifyPropertyChanged(string propertyName)
+            {
+                if (PropertyChanged != null)
+                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+            #endregion
         }
         #endregion
 
@@ -170,8 +180,9 @@ namespace Presentation
 
         void Current_DataChanged()
         {
+            CreateRules();
+            CreateAllCategories();
             NotifyPropertyChanged("Expenses");
-            NotifyPropertyChanged("Rules");
         }
         #endregion
 
@@ -179,13 +190,12 @@ namespace Presentation
         private void CreateRules()
         {
             Rules = new ObservableCollection<Rule>();
-            var result = from rule in Database.Current.Context.Rules
-                         select rule;
-            foreach (var rule in result)
+            foreach (var rule in Database.Current.Rules.Rules)
             {
                 Rules.Add(new Rule(this,rule));
             }
             CurrentRule = Rules.FirstOrDefault();
+            NotifyPropertyChanged("Rules");
 
         }
         private void CreateAllCategories()
@@ -196,6 +206,11 @@ namespace Presentation
                        Name = cat.Name,
                        Id = cat.ID
                    };
+            foreach (var rule in Rules)
+            {
+                rule.NotifyPropertyChanged("AllCategories");
+            }
+            NotifyPropertyChanged("AllCategories");
         }
         #endregion
 
@@ -226,7 +241,15 @@ namespace Presentation
         #region bindable properties
         public IEnumerable<Transact> Expenses
         {
-            get { return Database.Current.Rules.GetTransactions(CurrentRule.ID); }
+            get 
+            { 
+                if (CurrentRule!=null)
+                    return Database.Current.Rules.GetTransactions(CurrentRule.ID); 
+                else
+                    return Database.Current.Expenses; 
+
+            
+            }
         }
 
         public ObservableCollection<Rule> Rules { get; set; }

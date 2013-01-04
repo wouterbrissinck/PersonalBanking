@@ -19,39 +19,64 @@
             <presentation:StripSpaces x:Key="StripSpaces"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel>
-        <wpf:CategorySelector x:Name="m_categorySelector"></wpf:CategorySelector>
-        <GroupBox Header="Details">
-        <Grid
-            DataContext="{Binding Path=CurrentCategory, Mode=OneWay}"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <wpf:CategorySelector 
+            Grid.Row="0"
+            x:Name="m_categorySelector"
             >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="0">Name:</Label>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=Name,Converter={StaticResource StripSpaces}}"></TextBox>
-            <Label Grid.Row="0" Grid.Column="2">Color:</Label>
-            <toolkitX:ColorPicker Grid.Row="0" Grid.Column="3" SelectedColor="{Binding Path=Color}"></toolkitX:ColorPicker>
-            <Label Grid.Row="1" Grid.Column="0">Description:</Label>
-            <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="{Binding Path=Description}"></TextBox>
-        </Grid>
+        </wpf:CategorySelector>
+        <GroupBox Header="Details"
+            Grid.Row="1">
+                <Grid
+                DataContext="{Binding Path=CurrentCategory, Mode=OneWay}"
+                >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0">Name:</Label>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=Name,Converter={StaticResource StripSpaces}}"></TextBox>
+                <Label Grid.Row="0" Grid.Column="2">Color:</Label>
+                <toolkitX:ColorPicker Grid.Row="0" Grid.Column="3" SelectedColor="{Binding Path=Color}"></toolkitX:ColorPicker>
+                <Label Grid.Row="1" Grid.Column="0">Description:</Label>
+                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="{Binding Path=Description}"></TextBox>
+                </Grid>
         </GroupBox>
         <StackPanel
+            Grid.Row="2"
             Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Margin="10,5" Click="OnClickAdd">Add</Button>
             <Button Margin="10,5" Click="OnClickDelete">Delete</Button>
         </StackPanel>
         <wpf:ExpensesSelector 
+            Grid.Row="3"
             x:Name="m_expenses"
-            Height="auto"
-            ScrollViewer.VerticalScrollBarVisibility="Visible">            
+            MaxHeight="300"
+            ScrollViewer.VerticalScrollBarVisibility="Visible"
+            VerticalAlignment="Stretch"
+            >            
         </wpf:ExpensesSelector>
-    </StackPanel>
+        <StackPanel
+            Grid.Row="4"
+            Orientation="Horizontal" 
+            HorizontalAlignment="Center">
+            <Button  Margin="10,5" Click="ClearCategoryClick">Clear Category</Button>
+        </StackPanel>
+    </Grid>
 </UserControl>

@@ -92,7 +92,7 @@ namespace DataTier
             get
             {
                 var result = from trans in Context.Transact
-                             where trans.Amount < 0
+                             where trans.Amount < 0 && !trans.Internal.HasValue
                              select trans;
                 return (ObjectQuery<Transact>)result;
             }
@@ -105,6 +105,7 @@ namespace DataTier
                 var result = from trans in Context.Transact
                              where trans.Amount < 0
                              && !trans.Category.HasValue
+                             && !trans.Internal.HasValue
                              select trans;
                 return (ObjectQuery<Transact>)result;
             }

@@ -23,6 +23,7 @@ namespace DataTier
             get
             {
                 var result = from rule in Database.Current.Context.Rules
+                             orderby rule.Name
                              select rule;
                 return (ObjectQuery<Rules>)result;
             }
@@ -59,6 +60,11 @@ namespace DataTier
         }
 
         public IEnumerable<Transact> GetTransactions(Guid i_rule)
+        {
+            return GetTransactions(i_rule, Database.Current.Expenses);
+        }
+
+        public IEnumerable<Transact> GetTransactions(Guid i_rule, IQueryable<Transact> i_transactions)
         { 
             var rule=GetRule(i_rule);
 
@@ -68,21 +74,21 @@ namespace DataTier
             { 
                 case EField.account:
                     {
-                        result = from transact in Database.Current.Transactions
+                        result = from transact in i_transactions
                                  where transact.Account==rule.substring
                                  select transact;
                         break;
                     }
                 case EField.description:
                     {
-                        result = from transact in Database.Current.Transactions
+                        result = from transact in i_transactions
                                  where transact.Description.Contains(rule.substring)
                                  select transact;
                         break;
                     }
                 case EField.destination:
                     {
-                        result = from transact in Database.Current.Transactions
+                        result = from transact in i_transactions
                                  where transact.Destinations.Contains(rule.substring)
                                  select transact;
                         break;
@@ -92,15 +98,20 @@ namespace DataTier
 
             return result;
         }
-
         public void Apply(Guid i_rule)
         {
+            Apply(i_rule, Database.Current.Transactions);
+            Database.Current.SaveChanges();
+
+        }
+
+        public void Apply(Guid i_rule, IQueryable<Transact> i_transactions)
+        {
             Rules rule = GetRule(i_rule);
-            foreach (var transaction in GetTransactions(i_rule))
+            foreach (var transaction in GetTransactions(i_rule,i_transactions))
             {
                 transaction.Category = rule.category;                
             }
-            Database.Current.SaveChanges();
         }
     }
 }

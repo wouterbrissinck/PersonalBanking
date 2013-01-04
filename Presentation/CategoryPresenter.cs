@@ -17,7 +17,14 @@ namespace Presentation
         public CategoryPresenter()
         {
             CurrentCategory = Categories.First();
+            Database.Current.DataChanged += new DataChangedEvent(Current_DataChanged);
 
+        }
+
+        void Current_DataChanged()
+        {
+            NotifyPropertyChanged("Categories");
+            NotifyPropertyChanged("Expenses");
         }
         #endregion
 
@@ -81,6 +88,12 @@ namespace Presentation
             NotifyPropertyChanged("CurrentCategory");
         }
 
+        public void ClearCategory()
+        {
+            CurrentExpense.Category = null;
+            Database.Current.SaveChanges();
+        }
+
         #endregion
 
         #region INotifyProperyChanged
@@ -92,5 +105,11 @@ namespace Presentation
                 PropertyChanged(this,new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        public void CategorySelected(Categories i_selected)
+        {
+            CurrentExpense.Category = i_selected.ID;
+            Database.Current.SaveChanges();
+        }
     }
 }

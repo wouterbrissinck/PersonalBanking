@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DataTier;
+using Presentation;
+using Microsoft.Win32;
 
 namespace Wpf
 {
@@ -20,14 +22,24 @@ namespace Wpf
     /// </summary>
     public partial class ImportTab : UserControl
     {
+        ImportPresenter Presenter { get; set; }
+
         public ImportTab()
         {
             InitializeComponent();
+            Presenter = (App.Current as App).ImportPresenter;
+            DataContext = Presenter;
         }
 
-        private void Open_Click(object sender, RoutedEventArgs e)
+        private void Import(object sender, RoutedEventArgs e)
         {
-            FortisImporter.Load(m_ImportFileName.Text);
+            Presenter.Import();
+        }
+        private void Browse(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.ShowDialog();
+            Presenter.FileName = dlg.FileName;
         }
 
 

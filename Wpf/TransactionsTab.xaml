@@ -22,8 +22,6 @@
         
         <Grid.RowDefinitions>
             <RowDefinition ></RowDefinition>
-            <RowDefinition Height="5"></RowDefinition>
-            <RowDefinition ></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -31,24 +29,11 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <GridSplitter
-            Grid.Row="1"
-            Grid.ColumnSpan="3"
-            VerticalAlignment="Stretch"
-            HorizontalAlignment="Stretch" ShowsPreview="True">
-            
-        </GridSplitter>
-        <GridSplitter
             Grid.Column="1"
             VerticalAlignment="Stretch"
             HorizontalAlignment="Stretch" ShowsPreview="True">
 
         </GridSplitter>
-        <GroupBox
-            Grid.Row="2"
-            Grid.ColumnSpan="2"
-            Header="Rules"
-            >
-        </GroupBox>
         <GroupBox 
                 Grid.Row="0"
                 Grid.Column="2"

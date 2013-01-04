@@ -20,6 +20,8 @@ using System.Runtime.Serialization;
 
 [assembly: EdmRelationshipAttribute("BankTestModel", "FK_Transact_Categories", "Categories", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DataTier.Categories), "Transact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DataTier.Transact), true)]
 [assembly: EdmRelationshipAttribute("BankTestModel", "FK_Rules_Rules", "Categories", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DataTier.Categories), "Rules", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DataTier.Rules), true)]
+[assembly: EdmRelationshipAttribute("BankTestModel", "FK_Accounts_Owner", "Owner", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DataTier.Owner), "Account", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DataTier.Account), true)]
+[assembly: EdmRelationshipAttribute("BankTestModel", "FK_Transact_Accounts", "Account", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DataTier.Account), "Transact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DataTier.Transact), true)]
 
 #endregion
 
@@ -134,6 +136,38 @@ namespace DataTier
             }
         }
         private ObjectSet<Rules> _Rules;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Account> Accounts
+        {
+            get
+            {
+                if ((_Accounts == null))
+                {
+                    _Accounts = base.CreateObjectSet<Account>("Accounts");
+                }
+                return _Accounts;
+            }
+        }
+        private ObjectSet<Account> _Accounts;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Owner> Owners
+        {
+            get
+            {
+                if ((_Owners == null))
+                {
+                    _Owners = base.CreateObjectSet<Owner>("Owners");
+                }
+                return _Owners;
+            }
+        }
+        private ObjectSet<Owner> _Owners;
 
         #endregion
         #region AddTo Methods
@@ -169,6 +203,22 @@ namespace DataTier
         {
             base.AddObject("Rules", rules);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Accounts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAccounts(Account account)
+        {
+            base.AddObject("Accounts", account);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Owners EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToOwners(Owner owner)
+        {
+            base.AddObject("Owners", owner);
+        }
 
         #endregion
     }
@@ -177,6 +227,198 @@ namespace DataTier
     #endregion
     
     #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="BankTestModel", Name="Account")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Account : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Account object.
+        /// </summary>
+        /// <param name="accountNr">Initial value of the AccountNr property.</param>
+        /// <param name="owner">Initial value of the Owner property.</param>
+        public static Account CreateAccount(global::System.String accountNr, global::System.Int32 owner)
+        {
+            Account account = new Account();
+            account.AccountNr = accountNr;
+            account.Owner = owner;
+            return account;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String AccountNr
+        {
+            get
+            {
+                return _AccountNr;
+            }
+            set
+            {
+                if (_AccountNr != value)
+                {
+                    OnAccountNrChanging(value);
+                    ReportPropertyChanging("AccountNr");
+                    _AccountNr = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("AccountNr");
+                    OnAccountNrChanged();
+                }
+            }
+        }
+        private global::System.String _AccountNr;
+        partial void OnAccountNrChanging(global::System.String value);
+        partial void OnAccountNrChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Owner
+        {
+            get
+            {
+                return _Owner;
+            }
+            set
+            {
+                OnOwnerChanging(value);
+                ReportPropertyChanging("Owner");
+                _Owner = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Owner");
+                OnOwnerChanged();
+            }
+        }
+        private global::System.Int32 _Owner;
+        partial void OnOwnerChanging(global::System.Int32 value);
+        partial void OnOwnerChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> Amount
+        {
+            get
+            {
+                return _Amount;
+            }
+            set
+            {
+                OnAmountChanging(value);
+                ReportPropertyChanging("Amount");
+                _Amount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Amount");
+                OnAmountChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _Amount;
+        partial void OnAmountChanging(Nullable<global::System.Decimal> value);
+        partial void OnAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> Date
+        {
+            get
+            {
+                return _Date;
+            }
+            set
+            {
+                OnDateChanging(value);
+                ReportPropertyChanging("Date");
+                _Date = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Date");
+                OnDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _Date;
+        partial void OnDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnDateChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("BankTestModel", "FK_Accounts_Owner", "Owner")]
+        public Owner Owner1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Owner>("BankTestModel.FK_Accounts_Owner", "Owner").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Owner>("BankTestModel.FK_Accounts_Owner", "Owner").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Owner> Owner1Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Owner>("BankTestModel.FK_Accounts_Owner", "Owner");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Owner>("BankTestModel.FK_Accounts_Owner", "Owner", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("BankTestModel", "FK_Transact_Accounts", "Transact")]
+        public EntityCollection<Transact> Transacts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Transact>("BankTestModel.FK_Transact_Accounts", "Transact");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Transact>("BankTestModel.FK_Transact_Accounts", "Transact", value);
+                }
+            }
+        }
+
+        #endregion
+    }
     
     /// <summary>
     /// No Metadata Documentation available.
@@ -345,6 +587,110 @@ namespace DataTier
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Rules>("BankTestModel.FK_Rules_Rules", "Rules", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="BankTestModel", Name="Owner")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Owner : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Owner object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        public static Owner CreateOwner(global::System.Int32 id)
+        {
+            Owner owner = new Owner();
+            owner.ID = id;
+            return owner;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("BankTestModel", "FK_Accounts_Owner", "Account")]
+        public EntityCollection<Account> Accounts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Account>("BankTestModel.FK_Accounts_Owner", "Account");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Account>("BankTestModel.FK_Accounts_Owner", "Account", value);
                 }
             }
         }
@@ -904,6 +1250,54 @@ namespace DataTier
         private Nullable<global::System.DateTime> _Date;
         partial void OnDateChanging(Nullable<global::System.DateTime> value);
         partial void OnDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> Internal
+        {
+            get
+            {
+                return _Internal;
+            }
+            set
+            {
+                OnInternalChanging(value);
+                ReportPropertyChanging("Internal");
+                _Internal = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Internal");
+                OnInternalChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _Internal;
+        partial void OnInternalChanging(Nullable<global::System.Boolean> value);
+        partial void OnInternalChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ItemizeParent
+        {
+            get
+            {
+                return _ItemizeParent;
+            }
+            set
+            {
+                OnItemizeParentChanging(value);
+                ReportPropertyChanging("ItemizeParent");
+                _ItemizeParent = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ItemizeParent");
+                OnItemizeParentChanged();
+            }
+        }
+        private global::System.String _ItemizeParent;
+        partial void OnItemizeParentChanging(global::System.String value);
+        partial void OnItemizeParentChanged();
 
         #endregion
     
@@ -943,6 +1337,44 @@ namespace DataTier
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Categories>("BankTestModel.FK_Transact_Categories", "Categories", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("BankTestModel", "FK_Transact_Accounts", "Account")]
+        public Account Account1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Account>("BankTestModel.FK_Transact_Accounts", "Account").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Account>("BankTestModel.FK_Transact_Accounts", "Account").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Account> Account1Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Account>("BankTestModel.FK_Transact_Accounts", "Account");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Account>("BankTestModel.FK_Transact_Accounts", "Account", value);
                 }
             }
         }

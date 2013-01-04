@@ -6,19 +6,38 @@
     <edmx:StorageModels>
     <Schema Namespace="BankTestModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="BankTestModelStoreContainer">
+          <EntitySet Name="Accounts" EntityType="BankTestModel.Store.Accounts" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Categories" EntityType="BankTestModel.Store.Categories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Owner" EntityType="BankTestModel.Store.Owner" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Rules" EntityType="BankTestModel.Store.Rules" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="sysdiagrams" EntityType="BankTestModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Transact" EntityType="BankTestModel.Store.Transact" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Accounts_Owner" Association="BankTestModel.Store.FK_Accounts_Owner">
+            <End Role="Owner" EntitySet="Owner" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
           <AssociationSet Name="FK_Rules_Rules" Association="BankTestModel.Store.FK_Rules_Rules">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Rules" EntitySet="Rules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transact_Accounts" Association="BankTestModel.Store.FK_Transact_Accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Transact" EntitySet="Transact" />
           </AssociationSet>
           <AssociationSet Name="FK_Transact_Categories" Association="BankTestModel.Store.FK_Transact_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Transact" EntitySet="Transact" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="AccountNr" />
+          </Key>
+          <Property Name="AccountNr" Type="nchar" Nullable="false" MaxLength="22" />
+          <Property Name="Owner" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" />
+          <Property Name="Date" Type="date" />
+        </EntityType>
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="ID" />
@@ -27,6 +46,13 @@
           <Property Name="Name" Type="nchar" MaxLength="20" />
           <Property Name="Color" Type="char" MaxLength="9" />
           <Property Name="Description" Type="ntext" />
+        </EntityType>
+        <EntityType Name="Owner">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="text" />
         </EntityType>
         <EntityType Name="Rules">
           <Key>
@@ -60,7 +86,21 @@
           <Property Name="Description" Type="text" />
           <Property Name="Category" Type="int" />
           <Property Name="Date" Type="date" />
+          <Property Name="Internal" Type="bit" />
+          <Property Name="ItemizeParent" Type="nchar" MaxLength="10" />
         </EntityType>
+        <Association Name="FK_Accounts_Owner">
+          <End Role="Owner" Type="BankTestModel.Store.Owner" Multiplicity="1" />
+          <End Role="Accounts" Type="BankTestModel.Store.Accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="Owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Rules_Rules">
           <End Role="Categories" Type="BankTestModel.Store.Categories" Multiplicity="1" />
           <End Role="Rules" Type="BankTestModel.Store.Rules" Multiplicity="*" />
@@ -70,6 +110,18 @@
             </Principal>
             <Dependent Role="Rules">
               <PropertyRef Name="category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transact_Accounts">
+          <End Role="Accounts" Type="BankTestModel.Store.Accounts" Multiplicity="1" />
+          <End Role="Transact" Type="BankTestModel.Store.Transact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AccountNr" />
+            </Principal>
+            <Dependent Role="Transact">
+              <PropertyRef Name="Account" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -101,6 +153,16 @@
           <AssociationSet Name="FK_Rules_Rules" Association="BankTestModel.FK_Rules_Rules">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Rules" EntitySet="Rules" />
+          </AssociationSet>
+          <EntitySet Name="Accounts" EntityType="BankTestModel.Account" />
+          <EntitySet Name="Owners" EntityType="BankTestModel.Owner" />
+          <AssociationSet Name="FK_Accounts_Owner" Association="BankTestModel.FK_Accounts_Owner">
+            <End Role="Owner" EntitySet="Owners" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transact_Accounts" Association="BankTestModel.FK_Transact_Accounts">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Transact" EntitySet="Transact" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Categories">
@@ -137,6 +199,9 @@
           <Property Name="Category" Type="Int32" />
           <Property Name="Date" Type="DateTime" />
           <NavigationProperty Name="Categories" Relationship="BankTestModel.FK_Transact_Categories" FromRole="Transact" ToRole="Categories" />
+          <Property Type="Boolean" Name="Internal" />
+          <Property Type="String" Name="ItemizeParent" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Account1" Relationship="BankTestModel.FK_Transact_Accounts" FromRole="Transact" ToRole="Account" />
         </EntityType>
         <Association Name="FK_Transact_Categories">
           <End Role="Categories" Type="BankTestModel.Categories" Multiplicity="0..1" />
@@ -173,6 +238,49 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountNr" />
+          </Key>
+          <Property Type="String" Name="AccountNr" Nullable="false" MaxLength="22" FixedLength="true" Unicode="true" />
+          <Property Type="Int32" Name="Owner" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Precision="18" Scale="0" />
+          <Property Type="DateTime" Name="Date" />
+          <NavigationProperty Name="Owner1" Relationship="BankTestModel.FK_Accounts_Owner" FromRole="Account" ToRole="Owner" />
+          <NavigationProperty Name="Transacts" Relationship="BankTestModel.FK_Transact_Accounts" FromRole="Account" ToRole="Transact" />
+        </EntityType>
+        <EntityType Name="Owner">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Accounts" Relationship="BankTestModel.FK_Accounts_Owner" FromRole="Owner" ToRole="Account" />
+        </EntityType>
+        <Association Name="FK_Accounts_Owner">
+          <End Type="BankTestModel.Owner" Role="Owner" Multiplicity="1" />
+          <End Type="BankTestModel.Account" Role="Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="Owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transact_Accounts">
+          <End Type="BankTestModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="BankTestModel.Transact" Role="Transact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountNr" />
+            </Principal>
+            <Dependent Role="Transact">
+              <PropertyRef Name="Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -193,7 +301,9 @@
             <ScalarProperty Name="definition" ColumnName="definition" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Transact"><EntityTypeMapping TypeName="BankTestModel.Transact"><MappingFragment StoreEntitySet="Transact">
-            <ScalarProperty Name="Reference" ColumnName="Reference" />
+            <ScalarProperty Name="ItemizeParent" ColumnName="ItemizeParent" />
+                <ScalarProperty Name="Internal" ColumnName="Internal" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
             <ScalarProperty Name="Account" ColumnName="Account" />
             <ScalarProperty Name="Amount" ColumnName="Amount" />
             <ScalarProperty Name="Destinations" ColumnName="Destinations" />
@@ -208,6 +318,24 @@
                 <ScalarProperty Name="category" ColumnName="category" />
                 <ScalarProperty Name="substring" ColumnName="substring" />
                 <ScalarProperty Name="field" ColumnName="field" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="BankTestModel.Account">
+              <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="AccountNr" ColumnName="AccountNr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Owners">
+            <EntityTypeMapping TypeName="BankTestModel.Owner">
+              <MappingFragment StoreEntitySet="Owner">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -237,16 +365,27 @@
         <EntityTypeShape EntityType="BankTestModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="4.75" Height="1.9802864583333335" IsExpanded="true" />
         <EntityTypeShape EntityType="BankTestModel.Transact" Width="1.5" PointX="5" PointY="3.875" Height="2.5571907552083317" IsExpanded="true" />
         <AssociationConnector Association="BankTestModel.FK_Transact_Categories" ManuallyRouted="true">
-          <ConnectorPoint PointX="2.2500000000000004" PointY="3.422587890625" />
+          <ConnectorPoint PointX="1.7142998570834096" PointY="3.422587890625" />
           <ConnectorPoint PointX="2.625" PointY="3.78125" />
           <ConnectorPoint PointX="4.625" PointY="3.78125" />
           <ConnectorPoint PointX="4.625" PointY="3.5" />
-          <ConnectorPoint PointX="5" PointY="3.875" />
+          <ConnectorPoint PointX="5" PointY="3.8749999999999996" />
         </AssociationConnector>
         <EntityTypeShape EntityType="BankTestModel.Rules" Width="1.5" PointX="5" PointY="0.625" Height="1.9802864583333317" />
         <AssociationConnector Association="BankTestModel.FK_Rules_Rules" >
           <ConnectorPoint PointX="2.25" PointY="1.9276432291666659" />
           <ConnectorPoint PointX="5" PointY="1.9276432291666659" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="BankTestModel.Account" Width="1.5" PointX="9.625" PointY="0.875" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="BankTestModel.Owner" Width="1.5" PointX="7.375" PointY="1.25" Height="1.5956835937499996" />
+        <AssociationConnector Association="BankTestModel.FK_Accounts_Owner" >
+          <ConnectorPoint PointX="8.875" PointY="2.047841796875" />
+          <ConnectorPoint PointX="9.625" PointY="2.047841796875" />
+        </AssociationConnector>
+        <AssociationConnector Association="BankTestModel.FK_Transact_Accounts" >
+          <ConnectorPoint PointX="10.375" PointY="3.0475878906249996" />
+          <ConnectorPoint PointX="10.375" PointY="5.4420475260416659" />
+          <ConnectorPoint PointX="6.5" PointY="5.4420475260416659" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

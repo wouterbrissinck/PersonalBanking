@@ -44,8 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database.cs" />
+    <Compile Include="DBAccounts.cs" />
     <Compile Include="DBCategories.cs" />
     <Compile Include="FortisImporter.cs" />
+    <Compile Include="Importer.cs" />
     <Compile Include="Model1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

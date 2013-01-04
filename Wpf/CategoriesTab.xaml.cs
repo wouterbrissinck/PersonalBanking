@@ -40,5 +40,11 @@ namespace Wpf
             Presenter.DeleteCategory();
         }
 
+        private void ClearCategoryClick(object sender, RoutedEventArgs e)
+        {
+            Presenter.ClearCategory();
+        }
+
+
     }
 }
