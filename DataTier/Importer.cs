@@ -16,6 +16,18 @@ namespace DataTier
             Database.Current.SaveChanges();
             ApplyRules();
             Database.Current.SaveChanges();
+            //SetInternals();
+            //Database.Current.SaveChanges();
+        }
+
+        private void SetInternals()
+        {
+            var transactions = from trans in Database.Current.Transactions
+                               select trans;
+            foreach (var trans in transactions)
+            {
+                SetInternal(trans);
+            }
         }
 
 
