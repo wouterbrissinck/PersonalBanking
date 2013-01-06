@@ -39,7 +39,7 @@ namespace Presentation
         #region Lifetime
         public TransactionsPresenter()
         {
-            CurrentExpense = Expenses.First();
+            CurrentExpense = Expenses.FirstOrDefault();
             SelectCategory = new SelectCategoryCommand(this);
             Database.Current.DataChanged += new DataChangedEvent(Current_DataChanged);
 

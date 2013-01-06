@@ -19,6 +19,9 @@
             <TabItem Header="Rules" Name="m_TabRules">
                 <thisLib:RulesTab></thisLib:RulesTab>
             </TabItem>
+            <TabItem Header="Report" Name="m_TabReport">
+                <thisLib:ReportTab></thisLib:ReportTab>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

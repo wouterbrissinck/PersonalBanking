@@ -73,6 +73,9 @@
     <Compile Include="ImportTab.xaml.cs">
       <DependentUpon>ImportTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ReportTab.xaml.cs">
+      <DependentUpon>ReportTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RulesTab.xaml.cs">
       <DependentUpon>RulesTab.xaml</DependentUpon>
     </Compile>
@@ -107,6 +110,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ReportTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
