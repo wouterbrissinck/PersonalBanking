@@ -92,7 +92,8 @@ namespace DataTier
             get
             {
                 var result = from trans in Context.Transact
-                             where trans.Amount < 0 && !trans.Internal.HasValue
+                             where trans.Amount < 0 
+                             && !trans.Internal.HasValue
                              select trans;
                 return (ObjectQuery<Transact>)result;
             }
@@ -112,13 +113,6 @@ namespace DataTier
 
         }
 
-        #endregion
-
-        #region views
-        public ObjectQuery<Categories> CategoriesView
-        {
-            get {return (ObjectQuery<Categories>) from cat in Context.Categories select cat; }
-        }
 
         #endregion
     }

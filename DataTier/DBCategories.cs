@@ -10,7 +10,7 @@ namespace DataTier
 {
     public class DBCategories
     {
-        public ObjectSet<Categories> Categories
+        private ObjectSet<Categories> Categories
         {
             get { return Database.Current.Context.Categories; }
         }
@@ -42,5 +42,11 @@ namespace DataTier
 
             Database.Current.SaveChanges();
         }
+
+        public ObjectQuery<Categories> CategoriesAll
+        {
+            get { return (ObjectQuery<Categories>)from cat in Categories select cat; }
+        }
+
     }
 }

@@ -18,6 +18,7 @@ namespace Wpf
         public Presentation.TransactionsPresenter TransactionPresenter { get; set; }
         public Presentation.RulesPresenter RulesPresenter { get; set; }
         public Presentation.ImportPresenter ImportPresenter { get; set; }
+        public Presentation.ReportPresenter ReportPresenter { get; set; }
 
 
         void App_Startup(object sender, StartupEventArgs e)
@@ -26,6 +27,7 @@ namespace Wpf
             TransactionPresenter = new Presentation.TransactionsPresenter();
             RulesPresenter = new Presentation.RulesPresenter();
             ImportPresenter = new Presentation.ImportPresenter();
+            ReportPresenter = new Presentation.ReportPresenter();
     
         }
 

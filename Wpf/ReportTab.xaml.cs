@@ -11,6 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PieControls;
+using System.Collections.ObjectModel;
+using Presentation;
 
 namespace Wpf
 {
@@ -19,9 +22,19 @@ namespace Wpf
     /// </summary>
     public partial class ReportTab : UserControl
     {
+        ReportPresenter Presenter { get; set; }
+
         public ReportTab()
         {
             InitializeComponent();
+            Presenter = (App.Current as App).ReportPresenter;
+            DataContext = Presenter;
+
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Presenter.PeriodSelected();
         }
     }
 }

@@ -1298,6 +1298,30 @@ namespace DataTier
         private global::System.String _ItemizeParent;
         partial void OnItemizeParentChanging(global::System.String value);
         partial void OnItemizeParentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String RefundedBy
+        {
+            get
+            {
+                return _RefundedBy;
+            }
+            set
+            {
+                OnRefundedByChanging(value);
+                ReportPropertyChanging("RefundedBy");
+                _RefundedBy = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("RefundedBy");
+                OnRefundedByChanged();
+            }
+        }
+        private global::System.String _RefundedBy;
+        partial void OnRefundedByChanging(global::System.String value);
+        partial void OnRefundedByChanged();
 
         #endregion
     

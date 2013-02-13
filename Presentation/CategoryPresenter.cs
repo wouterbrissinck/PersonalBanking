@@ -31,7 +31,7 @@ namespace Presentation
         #region bindable properties
         public IQueryable<Categories> Categories
         {
-            get { return Database.Current.CategoriesView; }
+            get { return Database.Current.Categories.CategoriesAll ; }
         }
 
         Categories m_current_category;

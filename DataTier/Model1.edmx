@@ -88,6 +88,7 @@
           <Property Name="Date" Type="date" />
           <Property Name="Internal" Type="bit" />
           <Property Name="ItemizeParent" Type="nchar" MaxLength="10" />
+          <Property Name="RefundedBy" Type="nchar" MaxLength="10" />
         </EntityType>
         <Association Name="FK_Accounts_Owner">
           <End Role="Owner" Type="BankTestModel.Store.Owner" Multiplicity="1" />
@@ -202,6 +203,7 @@
           <Property Type="Boolean" Name="Internal" />
           <Property Type="String" Name="ItemizeParent" MaxLength="10" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Account1" Relationship="BankTestModel.FK_Transact_Accounts" FromRole="Transact" ToRole="Account" />
+          <Property Type="String" Name="RefundedBy" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <Association Name="FK_Transact_Categories">
           <End Role="Categories" Type="BankTestModel.Categories" Multiplicity="0..1" />
@@ -301,7 +303,8 @@
             <ScalarProperty Name="definition" ColumnName="definition" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Transact"><EntityTypeMapping TypeName="BankTestModel.Transact"><MappingFragment StoreEntitySet="Transact">
-            <ScalarProperty Name="ItemizeParent" ColumnName="ItemizeParent" />
+            <ScalarProperty Name="RefundedBy" ColumnName="RefundedBy" />
+                <ScalarProperty Name="ItemizeParent" ColumnName="ItemizeParent" />
                 <ScalarProperty Name="Internal" ColumnName="Internal" />
                 <ScalarProperty Name="Reference" ColumnName="Reference" />
             <ScalarProperty Name="Account" ColumnName="Account" />
@@ -365,11 +368,11 @@
         <EntityTypeShape EntityType="BankTestModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="4.75" Height="1.9802864583333335" IsExpanded="true" />
         <EntityTypeShape EntityType="BankTestModel.Transact" Width="1.5" PointX="5" PointY="3.875" Height="2.5571907552083317" IsExpanded="true" />
         <AssociationConnector Association="BankTestModel.FK_Transact_Categories" ManuallyRouted="true">
-          <ConnectorPoint PointX="1.7142998570834096" PointY="3.422587890625" />
-          <ConnectorPoint PointX="2.625" PointY="3.78125" />
-          <ConnectorPoint PointX="4.625" PointY="3.78125" />
-          <ConnectorPoint PointX="4.625" PointY="3.5" />
-          <ConnectorPoint PointX="5" PointY="3.8749999999999996" />
+          <ConnectorPoint PointX="1.5" PointY="3.422587890625" />
+          <ConnectorPoint PointX="1.5" PointY="4.5" />
+          <ConnectorPoint PointX="2.5" PointY="4.5" />
+          <ConnectorPoint PointX="2.5" PointY="5.5022469554227946" />
+          <ConnectorPoint PointX="5" PointY="5.5022469554227946" />
         </AssociationConnector>
         <EntityTypeShape EntityType="BankTestModel.Rules" Width="1.5" PointX="5" PointY="0.625" Height="1.9802864583333317" />
         <AssociationConnector Association="BankTestModel.FK_Rules_Rules" >
