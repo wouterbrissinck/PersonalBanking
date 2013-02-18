@@ -63,6 +63,9 @@
           <Property Name="substring" Type="text" />
           <Property Name="category" Type="int" Nullable="false" />
           <Property Name="Name" Type="nchar" MaxLength="30" />
+          <Property Name="Recurring" Type="bit" />
+          <Property Name="Period" Type="int" />
+          <Property Name="Amount" Type="money" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -227,6 +230,9 @@
           <Property Type="Int32" Name="category" Nullable="false" />
           <NavigationProperty Name="Categories" Relationship="BankTestModel.FK_Rules_Rules" FromRole="Rules" ToRole="Categories" />
           <Property Type="String" Name="Name" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Type="Boolean" Name="Recurring" />
+          <Property Type="Int32" Name="Period" />
+          <Property Type="Decimal" Name="Amount" Precision="19" Scale="4" />
         </EntityType>
         <Association Name="FK_Rules_Rules">
           <End Type="BankTestModel.Categories" Role="Categories" Multiplicity="1" />
@@ -317,6 +323,9 @@
           <EntitySetMapping Name="Rules">
             <EntityTypeMapping TypeName="BankTestModel.Rules">
               <MappingFragment StoreEntitySet="Rules">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="Recurring" ColumnName="Recurring" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="category" ColumnName="category" />
                 <ScalarProperty Name="substring" ColumnName="substring" />

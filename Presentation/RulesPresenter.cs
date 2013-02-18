@@ -72,6 +72,7 @@ namespace Presentation
             public string Name { get; set; }
             public int Id { get; set; }
         }
+        
         public class Rule : INotifyPropertyChanged
         {
             public Rule(RulesPresenter i_dad,DataTier.Rules i_data)
@@ -124,6 +125,37 @@ namespace Presentation
                 { 
                     Data.substring = value;
                     Dad.NotifyPropertyChanged("Expenses");
+                }
+            }
+
+            public System.Windows.Visibility IsRecurringVisibility
+            {
+                get { return IsRecurring ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed; }
+            }
+            public bool IsRecurring
+            {
+                get { return Data.Recurring.HasValue ? Data.Recurring.Value : false; }
+                set 
+                {
+                    Data.Recurring = value;
+                    NotifyPropertyChanged("IsRecurringVisibility");
+                }
+            }
+
+            public string Amount
+            {
+                get { return Data.Amount.HasValue ? Data.Amount.Value.ToString() : "---"; }
+                set
+                {
+                    decimal result;
+                    if (Decimal.TryParse(value, out result))
+                    {
+                        Data.Amount = result;
+                    }
+                    else 
+                    {
+                        Data.Amount = 0;
+                    }
                 }
             }
 

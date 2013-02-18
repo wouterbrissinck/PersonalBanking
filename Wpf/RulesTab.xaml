@@ -24,7 +24,7 @@
             Height="5"
             HorizontalAlignment="Stretch" 
             ShowsPreview="True">
-            
+
         </GridSplitter>
         <StackPanel
             Grid.Column="0"
@@ -51,24 +51,45 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel
+                        Orientation="Vertical"
+                        >
+                        <StackPanel
                         Orientation="Horizontal"
                         Margin="10"
                         >
-                        <TextBox Text="{Binding Path=Name}"  FontWeight="Bold"></TextBox>
-                        <TextBlock VerticalAlignment="Center" Text="  If "/>
-                        <ComboBox ItemsSource="{Binding Path=PossibleFields}" SelectedItem="{Binding Path=FieldStr}"></ComboBox>
-                        <TextBlock VerticalAlignment="Center" Text=" contains "></TextBlock>
-                        <TextBox Text="{Binding Path=Substring,UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        <TextBlock VerticalAlignment="Center" Text=" then assign category "></TextBlock>
-                        <ComboBox ItemsSource="{Binding Path=AllCategories}" SelectedIndex="{Binding Path=CategoryIndex}" >
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Path=Name}"></TextBlock>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
+                            <TextBox Text="{Binding Path=Name}"  FontWeight="Bold"></TextBox>
+                            <TextBlock VerticalAlignment="Center" Text="  If "/>
+                            <ComboBox ItemsSource="{Binding Path=PossibleFields}" SelectedItem="{Binding Path=FieldStr}"></ComboBox>
+                            <TextBlock VerticalAlignment="Center" Text=" contains "></TextBlock>
+                            <TextBox Text="{Binding Path=Substring,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            <TextBlock VerticalAlignment="Center" Text=" then assign category "></TextBlock>
+                            <ComboBox ItemsSource="{Binding Path=AllCategories}" SelectedIndex="{Binding Path=CategoryIndex}" >
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <CheckBox IsChecked="{Binding Path=IsRecurring}"
+                                  VerticalAlignment="Center" Margin="10,0">
+                                <TextBlock Text="Recurring"></TextBlock>
+                            </CheckBox>
+                        </StackPanel>
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Visibility="{Binding Path=IsRecurringVisibility}"
+                            >
+                            <ComboBox
+                                ></ComboBox>
+                            <TextBlock 
+                                Text=" Amount: "></TextBlock>
+                            <TextBox 
+                                Text="{Binding Path=Amount}"></TextBox>
+                        </StackPanel>
+
+
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

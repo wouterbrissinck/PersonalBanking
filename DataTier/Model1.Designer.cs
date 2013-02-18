@@ -848,6 +848,78 @@ namespace DataTier
         private global::System.String _Name;
         partial void OnNameChanging(global::System.String value);
         partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> Recurring
+        {
+            get
+            {
+                return _Recurring;
+            }
+            set
+            {
+                OnRecurringChanging(value);
+                ReportPropertyChanging("Recurring");
+                _Recurring = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Recurring");
+                OnRecurringChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _Recurring;
+        partial void OnRecurringChanging(Nullable<global::System.Boolean> value);
+        partial void OnRecurringChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Period
+        {
+            get
+            {
+                return _Period;
+            }
+            set
+            {
+                OnPeriodChanging(value);
+                ReportPropertyChanging("Period");
+                _Period = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Period");
+                OnPeriodChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Period;
+        partial void OnPeriodChanging(Nullable<global::System.Int32> value);
+        partial void OnPeriodChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> Amount
+        {
+            get
+            {
+                return _Amount;
+            }
+            set
+            {
+                OnAmountChanging(value);
+                ReportPropertyChanging("Amount");
+                _Amount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Amount");
+                OnAmountChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _Amount;
+        partial void OnAmountChanging(Nullable<global::System.Decimal> value);
+        partial void OnAmountChanged();
 
         #endregion
     
