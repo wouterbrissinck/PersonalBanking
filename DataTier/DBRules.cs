@@ -18,6 +18,16 @@ namespace DataTier
             account
         }
 
+        public enum ERecurrence
+        { 
+            undefined,
+            monthly,
+            bimonthly,
+            threemonthly,
+            sixmonthly,
+            yearly
+        }
+
         public ObjectQuery<Rules> Rules
         {
             get

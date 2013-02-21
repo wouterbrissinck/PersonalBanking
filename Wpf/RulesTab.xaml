@@ -82,6 +82,9 @@
                             Visibility="{Binding Path=IsRecurringVisibility}"
                             >
                             <ComboBox
+                                ItemsSource="{Binding Path=Recurrences}"
+                                DisplayMemberPath="name"
+                                SelectedItem="{Binding Path=Recurrence}"
                                 ></ComboBox>
                             <TextBlock 
                                 Text=" Amount: "></TextBlock>

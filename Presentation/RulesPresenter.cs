@@ -14,6 +14,12 @@ namespace Presentation
     public class RulesPresenter : INotifyPropertyChanged
     {
         #region inner classes
+        public class Recurrence
+        {
+            public DBRules.ERecurrence id { get; set; }
+            public string name{get;set;}
+        }
+        
         public class EFieldTypeConverter : TypeConverter
         {
             static Dictionary<DataTier.DBRules.EField, string> StringList;
@@ -142,6 +148,27 @@ namespace Presentation
                 }
             }
 
+            public List<Recurrence> Recurrences { get { return Dad.Recurrences; } }
+            public Recurrence Recurrence
+            {
+                get
+                {
+                    if (Data.Period.HasValue)
+                    {
+                        DBRules.ERecurrence id = (DBRules.ERecurrence)Data.Period.Value;
+                        Recurrence toret = Recurrences.Find(r => r.id == id);
+                        if (toret != null)
+                            return toret;
+
+                    }
+                    return Recurrences.Find(r => r.id == DBRules.ERecurrence.undefined);
+                }
+                set 
+                {
+                    Data.Period = (int)value.id;
+                }
+            
+            }
             public string Amount
             {
                 get { return Data.Amount.HasValue ? Data.Amount.Value.ToString() : "---"; }
@@ -207,6 +234,15 @@ namespace Presentation
             CreateRules();
             CreateAllCategories();
             CurrentExpense = Expenses.First();
+
+            Recurrences = new List<Recurrence>();
+            Recurrences.Add(new Recurrence{id=DBRules.ERecurrence.undefined,name="---"});
+            Recurrences.Add(new Recurrence{id=DBRules.ERecurrence.monthly,name="Monthly"});
+            Recurrences.Add(new Recurrence { id = DBRules.ERecurrence.bimonthly, name = "Bi-Monthly" });
+            Recurrences.Add(new Recurrence { id = DBRules.ERecurrence.threemonthly, name = "Three monthly" });
+            Recurrences.Add(new Recurrence { id = DBRules.ERecurrence.sixmonthly, name = "Six Monthly" });
+            Recurrences.Add(new Recurrence { id = DBRules.ERecurrence.yearly, name = "Yearly" });
+
             Database.Current.DataChanged += new DataChangedEvent(Current_DataChanged);
         }
 
@@ -271,6 +307,8 @@ namespace Presentation
         #endregion
 
         #region bindable properties
+        public List<Recurrence> Recurrences { get; private set; }
+
         public IEnumerable<Transact> Expenses
         {
             get 
@@ -278,9 +316,7 @@ namespace Presentation
                 if (CurrentRule!=null)
                     return Database.Current.Rules.GetTransactions(CurrentRule.ID); 
                 else
-                    return Database.Current.Expenses; 
-
-            
+                    return Database.Current.Expenses;
             }
         }
 
