@@ -46,6 +46,7 @@ namespace DataTier
             Database.Current.Context.Rules.DeleteObject(victim);
             Database.Current.SaveChanges();
         }
+
         public Rules AddRule()
         {
 
@@ -55,6 +56,7 @@ namespace DataTier
             rule.FieldExt = EField.description;
             rule.substring = "xxx";
             rule.category = Database.Current.Categories.Default().ID;
+            rule.Recurring = false;
             Database.Current.Context.Rules.AddObject(rule);
             Database.Current.SaveChanges();
 

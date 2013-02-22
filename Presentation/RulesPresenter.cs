@@ -144,7 +144,22 @@ namespace Presentation
                 set 
                 {
                     Data.Recurring = value;
+                    if (!Data.Period.HasValue)
+                    {
+                        //compute a good guess
+                        IEnumerable<Transact> expenses = Database.Current.Rules.GetTransactions(this.ID);
+                        RecurrentRuleInfo.SpentPerMonth info = new RecurrentRuleInfo.SpentPerMonth(expenses, DateTime.Today);
+                        this.Data.Period= (int)info.RecurrenceGuess;
+                    }
+                    if (!Data.Amount.HasValue)
+                    {
+                        IEnumerable<Transact> expenses = Database.Current.Rules.GetTransactions(this.ID);
+                        RecurrentRuleInfo.SpentPerMonth info = new RecurrentRuleInfo.SpentPerMonth(expenses, DateTime.Today);
+                        Data.Amount = info.LastExpense;                    
+                    }
                     NotifyPropertyChanged("IsRecurringVisibility");
+                    NotifyPropertyChanged("Amount");
+                    NotifyPropertyChanged("Recurrence");
                 }
             }
 
@@ -153,15 +168,18 @@ namespace Presentation
             {
                 get
                 {
+                    DBRules.ERecurrence id;
                     if (Data.Period.HasValue)
                     {
-                        DBRules.ERecurrence id = (DBRules.ERecurrence)Data.Period.Value;
-                        Recurrence toret = Recurrences.Find(r => r.id == id);
-                        if (toret != null)
-                            return toret;
-
+                        id = (DBRules.ERecurrence)Data.Period.Value;
                     }
-                    return Recurrences.Find(r => r.id == DBRules.ERecurrence.undefined);
+                    else
+                    {
+                        id = DBRules.ERecurrence.undefined;   
+                    }
+                    Recurrence toret = Recurrences.Find(r => r.id == id);
+                    return toret;
+
                 }
                 set 
                 {
