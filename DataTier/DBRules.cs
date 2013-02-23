@@ -73,7 +73,7 @@ namespace DataTier
 
         public IEnumerable<Transact> GetTransactions(Guid i_rule)
         {
-            return GetTransactions(i_rule, Database.Current.Expenses);
+            return GetTransactions(i_rule, Database.Current.RealTransactions);
         }
 
         public IEnumerable<Transact> GetTransactions(Guid i_rule, IQueryable<Transact> i_transactions)

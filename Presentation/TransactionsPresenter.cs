@@ -54,7 +54,7 @@ namespace Presentation
         #region bindable properties
         public IQueryable<Transact> Expenses
         {
-            get { return Database.Current.UncatExpenses; }
+            get { return Database.Current.UnCategorizedTransactions; }
         }
 
         Transact m_current_expense;

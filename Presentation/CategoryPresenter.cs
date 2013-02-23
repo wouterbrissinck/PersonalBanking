@@ -52,13 +52,13 @@ namespace Presentation
             {
                 if (CurrentCategory != null)
                 {
-                    return from expense in Database.Current.Expenses
+                    return from expense in Database.Current.RealTransactions
                            where expense.Category == CurrentCategory.ID
                            select expense;
                 }
                 else
                 {
-                    return from expense in Database.Current.Expenses
+                    return from expense in Database.Current.RealTransactions
                            select expense;
                 }
             }

@@ -87,25 +87,43 @@ namespace DataTier
         #endregion
 
         #region Queries
+
+        
         public ObjectQuery<Transact> Expenses
         {
             get
             {
                 var result = from trans in Context.Transact
-                             where trans.Amount < 0 
+                             where 
+                                 trans.Amount < 0 
                              && !trans.Internal.HasValue
                              select trans;
                 return (ObjectQuery<Transact>)result;
             }
 
         }
-        public ObjectQuery<Transact> UncatExpenses
+
+        public ObjectQuery<Transact> RealTransactions
         {
             get
             {
                 var result = from trans in Context.Transact
-                             where trans.Amount < 0
-                             && !trans.Category.HasValue
+                             where
+                                 !trans.Internal.HasValue
+                             select trans;
+                return (ObjectQuery<Transact>)result;
+            }
+
+        }
+
+        
+        public ObjectQuery<Transact> UnCategorizedTransactions
+        {
+            get
+            {
+                var result = from trans in Context.Transact
+                             where 
+                                !trans.Category.HasValue
                              && !trans.Internal.HasValue
                              select trans;
                 return (ObjectQuery<Transact>)result;

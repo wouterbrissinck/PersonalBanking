@@ -45,25 +45,36 @@
             SelectedItem="{Binding Path=CurrentRule}"
             >
             <ListView.Resources>
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}">SteelBlue</SolidColorBrush>
-                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}">SteelBlue</SolidColorBrush>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}">Gray</SolidColorBrush>
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}">Gray</SolidColorBrush>
             </ListView.Resources>
             <ListView.ItemTemplate>
                 <DataTemplate>
+                    <Border 
+                        BorderThickness="2"
+                        BorderBrush="Black"
+                        Background="DarkGray"
+                        Margin="5"
+                        CornerRadius="10"
+                        HorizontalAlignment="Stretch"
+                        >
                     <StackPanel
                         Orientation="Vertical"
                         >
+                        
                         <StackPanel
                         Orientation="Horizontal"
                         Margin="10"
                         >
-                            <TextBox Text="{Binding Path=Name}"  FontWeight="Bold"></TextBox>
+                            <TextBox Text="{Binding Path=Name}"  Width="180" FontWeight="Bold"></TextBox>
                             <TextBlock VerticalAlignment="Center" Text="  If "/>
                             <ComboBox ItemsSource="{Binding Path=PossibleFields}" SelectedItem="{Binding Path=FieldStr}"></ComboBox>
                             <TextBlock VerticalAlignment="Center" Text=" contains "></TextBlock>
-                            <TextBox Text="{Binding Path=Substring,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            <TextBox Text="{Binding Path=Substring,UpdateSourceTrigger=PropertyChanged}" Width="100"></TextBox>
                             <TextBlock VerticalAlignment="Center" Text=" then assign category "></TextBlock>
-                            <ComboBox ItemsSource="{Binding Path=AllCategories}" SelectedIndex="{Binding Path=CategoryIndex}" >
+                            <ComboBox ItemsSource="{Binding Path=AllCategories}" SelectedIndex="{Binding Path=CategoryIndex}" 
+                                      Width="180"
+                                      >
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
@@ -79,6 +90,7 @@
                         </StackPanel>
                         <StackPanel
                             Orientation="Horizontal"
+                            Margin="10"
                             Visibility="{Binding Path=IsRecurringVisibility}"
                             >
                             <ComboBox
@@ -94,6 +106,7 @@
 
 
                     </StackPanel>
+                    </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
 

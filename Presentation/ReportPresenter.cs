@@ -57,7 +57,7 @@ namespace Presentation
             TimeSpan period = Period.Value;
             DateTime start = today.Subtract(period);
 
-            var expenses = from expense in Database.Current.Expenses
+            var expenses = from expense in Database.Current.RealTransactions
                            where expense.Date > start
                            select expense;
 
@@ -80,6 +80,7 @@ namespace Presentation
 
             // sort it
             var pie_list = (from element in CategoryToAmount
+                            where element.Value>0
                            orderby element.Value descending
                            select element).Take(15);
 
