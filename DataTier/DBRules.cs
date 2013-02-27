@@ -125,5 +125,60 @@ namespace DataTier
                 transaction.Category = rule.category;                
             }
         }
+
+        public IQueryable<Rules> RecurrentRules
+        {
+            get
+            {
+                var toret = from rule in Rules
+                            where rule.Recurring.HasValue && rule.Recurring.Value
+                            select rule;
+
+                return toret;
+            }
+        }
+        public IQueryable<Rules> RecurrentIncomeRules
+        {
+            get 
+            {
+                var toret = from rule in RecurrentRules
+                            where rule.Amount.HasValue && rule.Amount > 0
+                            select rule;
+                return toret;
+            }
+        }
+        public IQueryable<Rules> RecurrentExpenseRules
+        {
+            get
+            {
+                var toret = from rule in RecurrentRules
+                            where rule.Amount.HasValue && rule.Amount < 0
+                            select rule;
+                return toret;
+            }
+        }
+
+        public SortedList<string, decimal> Category2FixedExpense
+        {
+            get
+            {
+                SortedList<string, decimal> toret = new SortedList<string, decimal>();
+                foreach (var rule in RecurrentRules)
+                {
+                    if (rule.Amount.HasValue)
+                    {
+                        string cat = rule.Categories.Name;
+                        if (!toret.ContainsKey(cat))
+                        {
+                            toret.Add(cat, 0);
+                        }
+                        toret[cat] += rule.MonthlyAmount;
+                    }
+                }
+                return toret;
+
+            }
+        }
+
     }
 }

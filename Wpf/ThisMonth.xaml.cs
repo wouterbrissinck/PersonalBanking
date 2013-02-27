@@ -20,21 +20,17 @@ namespace Wpf
     /// <summary>
     /// Interaction logic for ReportTab.xaml
     /// </summary>
-    public partial class Report : UserControl
+    public partial class ThisMonthTab: UserControl
     {
-        ReportPresenter Presenter { get; set; }
+        PlanPresenter Presenter { get; set; }
 
-        public Report()
+        public ThisMonthTab()
         {
             InitializeComponent();
-            Presenter = (App.Current as App).ReportPresenter;
+            Presenter = (App.Current as App).PlanPresenter;
             DataContext = Presenter;
 
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Presenter.PeriodSelected();
-        }
     }
 }

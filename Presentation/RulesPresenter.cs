@@ -148,13 +148,13 @@ namespace Presentation
                     {
                         //compute a good guess
                         IEnumerable<Transact> expenses = Database.Current.Rules.GetTransactions(this.ID);
-                        RecurrentRuleInfo.SpentPerMonth info = new RecurrentRuleInfo.SpentPerMonth(expenses, DateTime.Today);
+                        SpentPerMonth info = new SpentPerMonth(expenses, DateTime.Today);
                         this.Data.Period= (int)info.RecurrenceGuess;
                     }
                     if (!Data.Amount.HasValue)
                     {
                         IEnumerable<Transact> expenses = Database.Current.Rules.GetTransactions(this.ID);
-                        RecurrentRuleInfo.SpentPerMonth info = new RecurrentRuleInfo.SpentPerMonth(expenses, DateTime.Today);
+                        SpentPerMonth info = new SpentPerMonth(expenses, DateTime.Today);
                         Data.Amount = info.LastExpense;                    
                     }
                     NotifyPropertyChanged("IsRecurringVisibility");

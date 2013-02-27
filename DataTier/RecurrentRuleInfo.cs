@@ -5,124 +5,120 @@ using System.Text;
 
 namespace DataTier
 {
-    public class RecurrentRuleInfo
+    // Use to extract good initial values for a recurrent rule from a set of transactions
+    public class SpentPerMonth
     {
-        public class SpentPerMonth
+        public decimal[] Months { get; set; }
+
+        public SpentPerMonth(IEnumerable<Transact> i_expenses, DateTime i_reference)
         {
-            public decimal[] Months{get;set;}
+            Months = new decimal[12];
 
-            public SpentPerMonth(IEnumerable<Transact> i_expenses,DateTime i_reference)
+            foreach (Transact expense in i_expenses)
             {
-                Months = new decimal[12];
-
-                foreach (Transact expense in i_expenses)
+                if (expense.Date.HasValue)
                 {
-                    if (expense.Date.HasValue)
-                    {
-                        int month = expense.Date.Value.Month;
-                        int ref_month = i_reference.Date.Month;
+                    int month = expense.Date.Value.Month;
+                    int ref_month = i_reference.Date.Month;
 
-                        int index = ref_month - month;
-                        if (index < 0)
-                            index += 12;
-                        Months[index] += expense.Amount;
-                    }
+                    int index = ref_month - month;
+                    if (index < 0)
+                        index += 12;
+                    Months[index] += expense.Amount;
                 }
-                
             }
 
-            public decimal Average
+        }
+
+        public decimal Average
+        {
+            get
             {
-                get 
-                {
-                    return Months.Average();
-                }
+                return Months.Average();
             }
+        }
 
-            int FirstIndex
-            { 
-                get
-                {
-                    for (int i = 0; i < 12; ++i)
-                    {
-                        if (Months[i] != 0)
-                            return i;
-                    }
-                    return 11;
-                }
-            }
-            int LastIndex
+        int FirstIndex
+        {
+            get
             {
-                get
+                for (int i = 0; i < 12; ++i)
                 {
-                    for (int i = 11; i >= 0; --i)
-                    {
-                        if (Months[i] != 0)
-                            return i+1;
-                    }
-                    return 12;
+                    if (Months[i] != 0)
+                        return i;
                 }
+                return 11;
             }
-
-            int NonZeroes
+        }
+        int LastIndex
+        {
+            get
             {
-                get
+                for (int i = 11; i >= 0; --i)
                 {
-                    int zeroes = 0;
-                    for (int i = FirstIndex; i < LastIndex; ++i)
-                    {
-                        if (Months[i] == 0)
-                            zeroes++;
-                    }
-                    return LastIndex-FirstIndex - zeroes;
-
+                    if (Months[i] != 0)
+                        return i + 1;
                 }
+                return 12;
             }
+        }
 
-
-            int Density
+        int NonZeroes
+        {
+            get
             {
-                get 
+                int zeroes = 0;
+                for (int i = FirstIndex; i < LastIndex; ++i)
                 {
-
-                    return (int)(100f*((float)NonZeroes / (LastIndex - FirstIndex)));
+                    if (Months[i] == 0)
+                        zeroes++;
                 }
-            }
+                return LastIndex - FirstIndex - zeroes;
 
-            public DBRules.ERecurrence RecurrenceGuess
-            {
-                get 
-                {
-                    if (NonZeroes == 1)
-                        return DBRules.ERecurrence.yearly;
-                    else if (Density == 100)
-                        return DBRules.ERecurrence.monthly;
-                    else if (Density > 51)
-                        return DBRules.ERecurrence.bimonthly;
-                    else if (Density > 39)
-                        return DBRules.ERecurrence.threemonthly;
-                    else
-                        return DBRules.ERecurrence.sixmonthly;
-                }
             }
-
-            public decimal LastExpense
-            {
-                get 
-                {
-                    return Months[FirstIndex];
-                }
-            }
-        
         }
 
 
+        int Density
+        {
+            get
+            {
 
-        public RecurrentRuleInfo()
-        { 
-        
+                return (int)(100f * ((float)NonZeroes / (LastIndex - FirstIndex)));
+            }
         }
 
+        public DBRules.ERecurrence RecurrenceGuess
+        {
+            get
+            {
+                if (NonZeroes == 1)
+                    return DBRules.ERecurrence.yearly;
+                else if (Density == 100)
+                    return DBRules.ERecurrence.monthly;
+                else if (Density > 51)
+                    return DBRules.ERecurrence.bimonthly;
+                else if (Density > 39)
+                    return DBRules.ERecurrence.threemonthly;
+                else
+                    return DBRules.ERecurrence.sixmonthly;
+            }
+        }
 
+        public decimal LastExpense
+        {
+            get
+            {
+                return Months[FirstIndex];
+            }
+        }
+
+    }
+
+
+    // computations on recurrent rules
+    public class RecurrentRuleInfo
+    { 
+        
     }
 }

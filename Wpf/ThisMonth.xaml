@@ -1,0 +1,131 @@
+﻿<UserControl x:Class="Wpf.ThisMonthTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:toolkit="http://schemas.microsoft.com/wpf/2008/toolkit"
+             xmlns:toolkitX="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit/extended"
+             xmlns:DV="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+             xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+             xmlns:wpf="clr-namespace:Wpf"
+             xmlns:presentation="clr-namespace:Presentation;assembly=Presentation" 
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="505">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="Resources.xaml"
+                    >
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <presentation:StripSpaces x:Key="StripSpaces"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel
+        Orientation="Vertical"
+        >
+        <StackPanel
+            Orientation="Horizontal"
+            >
+            <TextBlock
+                Text="Month Shown: "
+                VerticalAlignment="Center"
+                >
+            </TextBlock>
+            <ComboBox
+            ItemsSource="{Binding Path=RecentMonths}"
+            DisplayMemberPath="Name"
+            SelectedItem="{Binding Path=ActiveMonth}"
+            HorizontalAlignment="Left"
+            >
+            </ComboBox>
+        </StackPanel>
+        <StackPanel
+            Orientation="Horizontal"
+            >
+            <TextBlock
+                Text="Period Considered: "
+                VerticalAlignment="Center"
+                >
+            </TextBlock>
+            <ComboBox
+            ItemsSource="{Binding Path=Periods}"
+            DisplayMemberPath="Name"
+            SelectedItem="{Binding Path=PeriodConsidered}"
+            HorizontalAlignment="Left"
+            >
+            </ComboBox>
+        </StackPanel>
+        <Grid Height="Auto" Width="Auto" Margin="0,2"
+              >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Text="Category" ></TextBlock>
+            <TextBlock Grid.Column="1" Text="Average Expense"></TextBlock>
+            <TextBlock Grid.Column="2" Text="Recurrent Expense"></TextBlock>
+            <TextBlock Grid.Column="3" Text="Proposed"></TextBlock>
+        </Grid>
+        <ListView
+            ItemsSource="{Binding Path=Infos}"
+            >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="Auto" Width="Auto" Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"></ColumnDefinition>
+                            <ColumnDefinition Width="200"></ColumnDefinition>
+                            <ColumnDefinition Width="200"></ColumnDefinition>
+                            <ColumnDefinition Width="200"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding Path=Name}" ></TextBlock>
+                        <TextBlock Grid.Column="1" Text="{Binding Path=AverageExpense,StringFormat=EUR {0:N0}}"></TextBlock>
+                        <TextBlock Grid.Column="2" Text="{Binding Path=FixedExpense,StringFormat=EUR {0:N0}}"></TextBlock>
+                        <TextBlock Grid.Column="3" Text="{Binding Path=Proposed,StringFormat=EUR {0:N0}}"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+
+        </ListView>
+        <Grid Height="Auto" Width="Auto" Margin="0,2"
+              >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Text="{Binding Path=totals.Name}" ></TextBlock>
+            <TextBlock Grid.Column="1" Text="{Binding Path=totals.AverageExpense,StringFormat=EUR {0:N0}}"></TextBlock>
+            <TextBlock Grid.Column="2" Text="{Binding Path=totals.FixedExpense,StringFormat=EUR {0:N0}}"></TextBlock>
+            <TextBlock Grid.Column="3" Text="{Binding Path=totals.Proposed,StringFormat=EUR {0:N0}}"></TextBlock>
+        </Grid>
+        <StackPanel 
+            Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Recurrent Income: "></TextBlock>
+                <TextBlock Text="{Binding Path=FixedIncome,StringFormat=EUR {0:N0}}"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Savings: "
+                      VerticalAlignment="Center"
+                      ></TextBlock>
+                <TextBox Text="{Binding Path=Savings}"></TextBox>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+
+</UserControl>

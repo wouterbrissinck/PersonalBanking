@@ -19,6 +19,7 @@ namespace Wpf
         public Presentation.RulesPresenter RulesPresenter { get; set; }
         public Presentation.ImportPresenter ImportPresenter { get; set; }
         public Presentation.ReportPresenter ReportPresenter { get; set; }
+        public Presentation.PlanPresenter PlanPresenter { get; set; }
 
 
         void App_Startup(object sender, StartupEventArgs e)
@@ -28,6 +29,7 @@ namespace Wpf
             RulesPresenter = new Presentation.RulesPresenter();
             ImportPresenter = new Presentation.ImportPresenter();
             ReportPresenter = new Presentation.ReportPresenter();
+            PlanPresenter = new Presentation.PlanPresenter();
     
         }
 

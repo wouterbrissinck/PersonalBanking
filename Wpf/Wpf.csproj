@@ -74,6 +74,9 @@
     <Compile Include="CategorySelector.xaml.cs">
       <DependentUpon>CategorySelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ThisMonth.xaml.cs">
+      <DependentUpon>ThisMonth.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Events.cs" />
     <Compile Include="ExpensesSelector.xaml.cs">
       <DependentUpon>ExpensesSelector.xaml</DependentUpon>
@@ -97,6 +100,10 @@
     <Page Include="CategorySelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ThisMonth.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ExpensesSelector.xaml">
       <SubType>Designer</SubType>

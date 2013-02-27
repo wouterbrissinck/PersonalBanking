@@ -18,11 +18,7 @@ namespace Presentation
     {
         public ReportPresenter()
         {
-            Periods = new SortedList<string, TimeSpan>();
-            Periods["Last year"] = TimeSpan.FromDays(365);
-            Periods["Last 6 months"] = TimeSpan.FromDays(365 / 2);
-            Periods["Last 3 months"] = TimeSpan.FromDays(365 / 4);
-            Periods["Last month"] = TimeSpan.FromDays(365/12);
+            Periods = TimeSpans.Periods();
             Period = Periods.First();
 
             category_distribution = new ObservableCollection<KeyValuePair<string, double>>();
@@ -42,8 +38,8 @@ namespace Presentation
         }
         #endregion
 
-        public KeyValuePair<string, TimeSpan> Period { get; set; }
-        public SortedList<string, TimeSpan> Periods { get; set; }
+        public TimeSpans.Period Period { get; set; }
+        public List<TimeSpans.Period> Periods { get; set; }
         public void PeriodSelected()
         {
             NotifyPropertyChanged("CategoryDistribution");
@@ -54,32 +50,14 @@ namespace Presentation
 
             // limit expenses to the relevant onces
             DateTime today = DateTime.Now;
-            TimeSpan period = Period.Value;
+            TimeSpan period = Period.Span;
             DateTime start = today.Subtract(period);
 
-            var expenses = from expense in Database.Current.RealTransactions
-                           where expense.Date > start
-                           select expense;
 
-            // add up the amountsper category
-            SortedList<string, decimal> CategoryToAmount = new SortedList<string, decimal>();
-            foreach (var expense in expenses)
-            {
-                if (expense.Categories != null)
-                {
-                    if (!CategoryToAmount.ContainsKey(expense.Categories.Name))
-                    {
-                        CategoryToAmount[expense.Categories.Name] = 0;
-                    }
-                    CategoryToAmount[expense.Categories.Name] -= expense.Amount;
-                
-                }
-
-            }
-
+            var category_2_amount = Database.Current.Categories.GetCategoryToAmount(start, DateTime.Now);
 
             // sort it
-            var pie_list = (from element in CategoryToAmount
+            var pie_list = (from element in category_2_amount
                             where element.Value>0
                            orderby element.Value descending
                            select element).Take(15);

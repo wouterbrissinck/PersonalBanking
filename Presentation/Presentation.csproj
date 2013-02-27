@@ -50,9 +50,11 @@
     <Compile Include="CategoryPresenter.cs" />
     <Compile Include="Converters.cs" />
     <Compile Include="ImportPresenter.cs" />
+    <Compile Include="PlanPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportPresenter.cs" />
     <Compile Include="RulesPresenter.cs" />
+    <Compile Include="TimeSpans.cs" />
     <Compile Include="TransactionsPresenter.cs" />
   </ItemGroup>
   <ItemGroup>

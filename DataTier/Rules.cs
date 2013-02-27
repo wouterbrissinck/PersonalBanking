@@ -18,10 +18,28 @@ namespace DataTier
             set { field = (int)value; }
         }
 
-        public ObjectSet<Categories> AllCategories
+        public decimal MonthlyAmount
         {
-            get { return Database.Current.Context.Categories; }
+            get 
+            {
+                if (!Amount.HasValue)
+                    return 0;
+
+                int divisor=0;
+                switch ((DBRules.ERecurrence)Period)
+                {
+                    case DBRules.ERecurrence.monthly:divisor=1;break;
+                    case DBRules.ERecurrence.bimonthly:divisor=2;break;
+                    case DBRules.ERecurrence.threemonthly:divisor=3;break;
+                    case DBRules.ERecurrence.sixmonthly:divisor=6;break;
+                    case DBRules.ERecurrence.yearly:divisor=12;break;
+                    default: divisor = 1; break;
+                }
+                return Amount.Value / (decimal)divisor;
+
+            }
         }
+
 
     }
 }

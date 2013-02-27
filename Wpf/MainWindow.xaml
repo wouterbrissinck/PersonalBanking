@@ -19,8 +19,11 @@
             <TabItem Header="Rules" Name="m_TabRules">
                 <thisLib:RulesTab></thisLib:RulesTab>
             </TabItem>
+            <TabItem Header="This Month" Name="m_tabThisMonth">
+                <thisLib:ThisMonthTab></thisLib:ThisMonthTab>
+            </TabItem>
             <TabItem Header="Report" Name="m_TabReport">
-                <thisLib:ReportTab></thisLib:ReportTab>
+                <thisLib:Report></thisLib:Report>
             </TabItem>
         </TabControl>
     </Grid>
