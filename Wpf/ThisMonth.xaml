@@ -59,10 +59,13 @@
         <Grid Height="Auto" Width="Auto" Margin="0,2"
               >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"></ColumnDefinition>
-                <ColumnDefinition Width="200"></ColumnDefinition>
-                <ColumnDefinition Width="200"></ColumnDefinition>
-                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -71,6 +74,9 @@
             <TextBlock Grid.Column="1" Text="Average Expense"></TextBlock>
             <TextBlock Grid.Column="2" Text="Recurrent Expense"></TextBlock>
             <TextBlock Grid.Column="3" Text="Proposed"></TextBlock>
+            <TextBlock Grid.Column="4" Text="Active Month"></TextBlock>
+            <TextBlock Grid.Column="5" Text="Saved"></TextBlock>
+            <TextBlock Grid.Column="6" Text="Cumulated Saved"></TextBlock>
         </Grid>
         <ListView
             ItemsSource="{Binding Path=Infos}"
@@ -79,10 +85,13 @@
                 <DataTemplate>
                     <Grid Height="Auto" Width="Auto" Margin="0,2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="200"></ColumnDefinition>
-                            <ColumnDefinition Width="200"></ColumnDefinition>
-                            <ColumnDefinition Width="200"></ColumnDefinition>
-                            <ColumnDefinition Width="200"></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"></RowDefinition>
@@ -91,6 +100,9 @@
                         <TextBlock Grid.Column="1" Text="{Binding Path=AverageExpense,StringFormat=EUR {0:N0}}"></TextBlock>
                         <TextBlock Grid.Column="2" Text="{Binding Path=FixedExpense,StringFormat=EUR {0:N0}}"></TextBlock>
                         <TextBlock Grid.Column="3" Text="{Binding Path=Proposed,StringFormat=EUR {0:N0}}"></TextBlock>
+                        <TextBlock Grid.Column="4" Text="{Binding Path=ThisMonthExpense,StringFormat=EUR {0:N0}}"></TextBlock>
+                        <TextBlock Grid.Column="5" Text="{Binding Path=Saved,StringFormat=EUR {0:N0}}"></TextBlock>
+                        <TextBlock Grid.Column="6" Text="{Binding Path=CumulatedSaved,StringFormat=EUR {0:N0}}"></TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -100,10 +112,13 @@
         <Grid Height="Auto" Width="Auto" Margin="0,2"
               >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"></ColumnDefinition>
-                <ColumnDefinition Width="200"></ColumnDefinition>
-                <ColumnDefinition Width="200"></ColumnDefinition>
-                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -112,6 +127,9 @@
             <TextBlock Grid.Column="1" Text="{Binding Path=totals.AverageExpense,StringFormat=EUR {0:N0}}"></TextBlock>
             <TextBlock Grid.Column="2" Text="{Binding Path=totals.FixedExpense,StringFormat=EUR {0:N0}}"></TextBlock>
             <TextBlock Grid.Column="3" Text="{Binding Path=totals.Proposed,StringFormat=EUR {0:N0}}"></TextBlock>
+            <TextBlock Grid.Column="4" Text="{Binding Path=totals.ThisMonthExpense,StringFormat=EUR {0:N0}}"></TextBlock>
+            <TextBlock Grid.Column="5" Text="{Binding Path=totals.Saved,StringFormat=EUR {0:N0}}"></TextBlock>
+            <TextBlock Grid.Column="6" Text="{Binding Path=totals.CumulatedSaved,StringFormat=EUR {0:N0}}"></TextBlock>
         </Grid>
         <StackPanel 
             Orientation="Vertical">

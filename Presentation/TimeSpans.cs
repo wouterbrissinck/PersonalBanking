@@ -39,11 +39,21 @@ namespace Presentation
             DateTime dd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             List<Month> toret = new List<Month>();
 
-            for (int i = 0; i < 12; ++i)
+            int year = dd.Year;
+            int month = dd.Month;
+
+            for (int i = 0; i < 13; ++i)
             {
                 string m = dd.ToString("MMMM");
                 toret.Add(new Month {Name=m,Date=dd });
-                dd = new DateTime(dd.Year, dd.Month-1 ==0 ? 12:dd.Month-1, 1);
+
+                month--;
+                if (month == 0)
+                {
+                    month = 12;
+                    year--;
+                }
+                dd = new DateTime(year, month, 1);
             }
 
             return toret;

@@ -78,12 +78,14 @@
                 <DatePicker
                     Grid.Row="0"
                     Grid.Column="0"
+                    SelectedDate="{Binding Path=Start}"
                     >
                     
                 </DatePicker>
                 <DatePicker
                     Grid.Row="0"
                     Grid.Column="1"
+                    SelectedDate="{Binding Path=End}"
                     >
                     
                 </DatePicker>

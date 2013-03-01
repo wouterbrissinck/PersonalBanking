@@ -18,7 +18,8 @@ namespace Presentation
         {
             CurrentCategory = Categories.First();
             Database.Current.DataChanged += new DataChangedEvent(Current_DataChanged);
-
+            End = DateTime.Now;
+            Start=new DateTime(End.Year-1,End.Month,End.Day);
         }
 
         void Current_DataChanged()
@@ -54,11 +55,15 @@ namespace Presentation
                 {
                     return from expense in Database.Current.RealTransactions
                            where expense.Category == CurrentCategory.ID
+                           && expense.Date<=End
+                           && expense.Date>=Start
                            select expense;
                 }
                 else
                 {
                     return from expense in Database.Current.RealTransactions
+                           where expense.Date <= End
+                           && expense.Date >= Start
                            select expense;
                 }
             }
@@ -68,9 +73,24 @@ namespace Presentation
             get;
             set;
         }
+
+        DateTime _start;
+        public DateTime Start 
+        { get{return _start;} set{_start=value;NotifyPropertyChanged("Expenses"); }}
+        
+        DateTime _end;
+        public DateTime End
+        { get { return _end; } set { _end = value; NotifyPropertyChanged("Expenses"); } }
+
         #endregion
         
         #region Operations
+        public void CategorySelected(Categories i_selected)
+        {
+            CurrentExpense.Category = i_selected.ID;
+            Database.Current.SaveChanges();
+        }
+
         public void AddCategory()
         {
             Database.Current.Categories.Add();
@@ -106,10 +126,6 @@ namespace Presentation
         }
         #endregion
 
-        public void CategorySelected(Categories i_selected)
-        {
-            CurrentExpense.Category = i_selected.ID;
-            Database.Current.SaveChanges();
-        }
+
     }
 }

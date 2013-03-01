@@ -51,7 +51,7 @@ namespace DataTier
         public SortedList<string, decimal> GetCategoryToAmount(DateTime i_start, DateTime i_end)
         {
             var expenses = from expense in Database.Current.RealTransactions
-                           where expense.Date > i_start
+                           where expense.Date >= i_start
                            && expense.Date < i_end
                            select expense;
 
