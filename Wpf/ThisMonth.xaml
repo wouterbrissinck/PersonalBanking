@@ -97,7 +97,7 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Text="{Binding Path=Name}" ></TextBlock>
-                        <TextBlock Grid.Column="1" Text="{Binding Path=AverageExpense,StringFormat=EUR {0:N0}}"></TextBlock>
+                        <TextBlock Grid.Column="1" Text="{Binding Path=PatternPercent, StringFormat= {}{0:0.00}%}"></TextBlock>
                         <TextBlock Grid.Column="2" Text="{Binding Path=FixedExpense,StringFormat=EUR {0:N0}}"></TextBlock>
                         <TextBlock Grid.Column="3" Text="{Binding Path=Proposed,StringFormat=EUR {0:N0}}"></TextBlock>
                         <TextBlock Grid.Column="4" Text="{Binding Path=ThisMonthExpense,StringFormat=EUR {0:N0}}"></TextBlock>
@@ -124,7 +124,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Text="{Binding Path=totals.Name}" ></TextBlock>
-            <TextBlock Grid.Column="1" Text="{Binding Path=totals.AverageExpense,StringFormat=EUR {0:N0}}"></TextBlock>
+            <TextBlock Grid.Column="1" Text="{Binding Path=totals.PatternPercent, StringFormat= {}{0:0.00}%}"></TextBlock>
             <TextBlock Grid.Column="2" Text="{Binding Path=totals.FixedExpense,StringFormat=EUR {0:N0}}"></TextBlock>
             <TextBlock Grid.Column="3" Text="{Binding Path=totals.Proposed,StringFormat=EUR {0:N0}}"></TextBlock>
             <TextBlock Grid.Column="4" Text="{Binding Path=totals.ThisMonthExpense,StringFormat=EUR {0:N0}}"></TextBlock>

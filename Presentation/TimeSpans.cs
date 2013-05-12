@@ -42,7 +42,7 @@ namespace Presentation
             int year = dd.Year;
             int month = dd.Month;
 
-            for (int i = 0; i < 13; ++i)
+            for (int i = 0; i < 12; ++i)
             {
                 string m = dd.ToString("MMMM");
                 toret.Add(new Month {Name=m,Date=dd });

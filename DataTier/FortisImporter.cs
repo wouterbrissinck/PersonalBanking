@@ -17,18 +17,21 @@ namespace DataTier
             {
                 line=line.Replace('\"',' ');
                 String[] fields = line.Split(';');
-                for (int i = 0; i < fields.Length; ++i)
+                if (fields.Length >= 8)
                 {
-                    fields[i]=fields[i].Trim();
+                    for (int i = 0; i < fields.Length; ++i)
+                    {
+                        fields[i] = fields[i].Trim();
+                    }
+
+                    Transact new_transact = Transact.CreateTransact(fields[0], fields[7], Convert.ToDecimal(fields[3]));
+                    new_transact.Date = Convert.ToDateTime(fields[1]);
+                    new_transact.Destinations = fields[5];
+                    new_transact.Description = fields[6];
+                    new_transact.Category = null;
+
+                    AddTransaction(new_transact);
                 }
-
-                Transact new_transact = Transact.CreateTransact(fields[0],fields[7],Convert.ToDecimal(fields[3]));
-                new_transact.Date = Convert.ToDateTime(fields[1]);
-                new_transact.Destinations = fields[5];
-                new_transact.Description = fields[6];
-                new_transact.Category=null;
-
-                AddTransaction(new_transact);
 
                 line = reader.ReadLine();
             }

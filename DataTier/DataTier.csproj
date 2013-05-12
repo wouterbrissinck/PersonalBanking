@@ -46,6 +46,7 @@
     <Compile Include="Database.cs" />
     <Compile Include="DBAccounts.cs" />
     <Compile Include="DBCategories.cs" />
+    <Compile Include="Distribution.cs" />
     <Compile Include="FortisImporter.cs" />
     <Compile Include="Importer.cs" />
     <Compile Include="Model1.Designer.cs">

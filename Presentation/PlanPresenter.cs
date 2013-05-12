@@ -32,7 +32,7 @@ namespace Presentation
             ActiveMonth = RecentMonths[0];
             Periods = TimeSpans.Periods();
             PeriodConsidered = Periods[3];
-            Savings = 500;
+            Savings = 0;
         }
         #endregion
 
@@ -119,7 +119,7 @@ namespace Presentation
                     info.Color = cat.Color;
                     info.PatternPercent = SpendingPattern[cat.Name];
                     info.FixedExpense = rule_expense.ContainsKey(cat.Name) ? -rule_expense[cat.Name] : 0;
-                    info.AverageExpense = AverageSpending[cat.Name];
+                    //info.AverageExpense = AverageSpending[cat.Name];
                     if (MonthlySpending.ContainsKey(cat.Name) && MonthlySpending[cat.Name].ContainsKey(ActiveMonth.Name))
                         info.ThisMonthExpense = MonthlySpending[cat.Name][ActiveMonth.Name];
                     else
@@ -157,7 +157,7 @@ namespace Presentation
             {
                 info.CumulatedSaved = 0;
                 bool thismonth = (ActiveMonth.Date == RecentMonths[0].Date);
-                for (int i=thismonth?0:1;i<PeriodConsidered.Months+1;++i)
+                for (int i=1;i<PeriodConsidered.Months;++i)
                 {
                     TimeSpans.Month month= RecentMonths[i];
                     decimal expense;
@@ -177,36 +177,28 @@ namespace Presentation
 
         private void ComputeProposedExpenses(List<CategoryInfo> i_infos)
         {
-            decimal income = FixedIncome - Savings;
-            decimal budget = income;
-            float percent = 0;
-            foreach (var info in i_infos)
+            Distribution D=new Distribution();
+            D.P = new double[i_infos.Count];
+            D.Min = new decimal[i_infos.Count];
+
+            for (int i = 0; i < i_infos.Count(); ++i)
             {
-                info.Proposed = income * (decimal)info.PatternPercent;
-                if (info.Proposed < info.FixedExpense * (decimal)1.1)
-                {
-                    budget -= info.FixedExpense;
-                    info.Override = true;
-                }
+                D.P[i] = i_infos[i].PatternPercent;
+                D.Min[i] = i_infos[i].FixedExpense >0 ? i_infos[i].FixedExpense : 0;
+            }
+            D.Total = FixedIncome - Savings;
+
+            D.Compute();
+
+            for (int i = 0; i < i_infos.Count(); ++i)
+            {
+                if (i_infos[i].FixedExpense <0)
+                    i_infos[i].Proposed = i_infos[i].FixedExpense;
                 else
-                {
-                    percent += info.PatternPercent;
-                    info.Override = false;
-                }
-
+                    i_infos[i].Proposed = D.R[i];
             }
 
-            if (percent != 0)
-            {
-                budget = budget / (decimal)percent;
-            }
-            foreach (var info in i_infos)
-            {
-                info.Proposed = budget * (decimal)info.PatternPercent;
-                if (info.Override)
-                    info.Proposed = info.FixedExpense;
 
-            }
         }
 
 
@@ -215,42 +207,28 @@ namespace Presentation
         {
             // get last years spendings per category
             DateTime end = new DateTime(DateTime.Now.Year,DateTime.Now.Month,1);
-            int year=end.Year;
-            int month=end.Month-PeriodConsidered.Months;
-            if (month<1)
-            {
-                month+=12;
-                year--;
-            }
-
-            DateTime start = new DateTime(year,month, 1);
-            int months = PeriodConsidered.Months;
+            TimeSpan sixmonths = new TimeSpan(365 / 2, 0, 0, 0, 0);
+            DateTime start = end.Subtract(sixmonths);
 
             var cat2amount = DataTier.Database.Current.Categories.GetCategoryToAmount(start, end);
-
-            // only keep expenses, remove incomes
-            var cat2expense = from pair in cat2amount
-                              where pair.Key.Trim()!="Salary"
-                              select pair;
 
 
             // compute total expense
             decimal total = 0;
-            foreach (var pair in cat2expense)
+            foreach (var pair in cat2amount)
             {
-                total += pair.Value;
+                if (pair.Value > 0) 
+                    total += pair.Value;
             }
 
             SpendingPattern = new SortedList<string, float>();
-            foreach (var pair in cat2expense)
+            foreach (var pair in cat2amount)
             {
-                SpendingPattern.Add(pair.Key, (float)pair.Value / (float)total);
-            }
+                if (pair.Value>0)
+                    SpendingPattern.Add(pair.Key, (float)pair.Value / (float)total);
+                else
+                    SpendingPattern.Add(pair.Key, 0);
 
-            AverageSpending = new SortedList<string, decimal>();
-            foreach (var pair in cat2expense)
-            {
-                AverageSpending.Add(pair.Key, pair.Value / (decimal)months);
             }
 
             ComputeMonthlySpending();
@@ -268,16 +246,17 @@ namespace Presentation
 
             foreach (var month in RecentMonths)
             {
-                DateTime begin = month.Date;
+                DateTime end = new DateTime(month.Date.Year,month.Date.Month,25);
+                
 
-                int end_month = begin.Month + 1;
-                int end_year = begin.Year;
-                if (end_month > 12)
+                int begin_month = end.Month - 1;
+                int begin_year = end.Year;
+                if (begin_month ==0)
                 {
-                    end_month = 1;
-                    end_year++;
+                    begin_month = 12;
+                    begin_year--;
                 }
-                DateTime end = new DateTime(end_year, end_month, begin.Day);
+                DateTime begin = new DateTime(begin_year, begin_month, end.Day);
                 var amounts = DataTier.Database.Current.Categories.GetCategoryToAmount(begin, end);
                 foreach (var pair in amounts)
                 {
@@ -295,7 +274,7 @@ namespace Presentation
             FixedIncome = 0;
             foreach (var rule in rules)
             {
-                if(rule.Categories.Name.Trim()=="Salary")
+                if(rule.Amount>0)
                     FixedIncome += rule.MonthlyAmount;
             }
         }
